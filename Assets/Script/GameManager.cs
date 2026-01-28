@@ -44,9 +44,6 @@ public class GameManager : MonoBehaviour
     void GenerateAllPasswords()
     {
 
-        // 2. 生成数字密码锁的密码 (例如: "4829")
-        puzzlePasswords["ClockPuzzle"] = GenerateRandomNumber(4);
-
         // 打印出来方便调试（记得正式发布时删掉）
         foreach (var puzzle in puzzlePasswords)
         {

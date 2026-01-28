@@ -59,8 +59,6 @@ public class ClockScrollControl : MonoBehaviour, IPointerDownHandler, IDragHandl
 
     private void CheckSolution()
     {
-        // 这里写检测逻辑，对比每个圆环的 z 轴旋转
-        Debug.Log(gameObject.name + " 当前角度: " + rectTransform.localEulerAngles.z);
         mainClockControl.CheckMultiPointPuzzle();
     }
 }

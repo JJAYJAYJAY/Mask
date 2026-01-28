@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MainClockControl : MonoBehaviour
 {
+    //TODO 声音系统
     [Header("UI")]
     public GameObject numberPrefab;
     public GameObject numberClock;
@@ -35,11 +36,11 @@ public class MainClockControl : MonoBehaviour
     }
 
     public List<RingData> rings = new List<RingData>();
-
+    private int[] numberPositions = new int[12];
     // ===================== Unity =====================
     void Start()
     {
-        targetPositions= GetRandomPositions(3, 12);
+        targetPositions = GetRandomPositions(3, 12);
         GenerateNumbers();
         GenerateSolvablePuzzle();
         PrintCurrentState();
@@ -62,7 +63,9 @@ public class MainClockControl : MonoBehaviour
             rect.anchoredPosition = new Vector2(x, y);
 
             numObj.transform.localRotation = Quaternion.Euler(0, 0, -(i * 30f));
-            numObj.GetComponentInChildren<TMP_Text>().text = Random.Range(0, 10).ToString();
+            numberPositions[i-1] = Random.Range(0, 10);
+            numObj.GetComponentInChildren<TMP_Text>().text = numberPositions[i-1].ToString();
+            
             numObj.name = $"Num_{i}";
         }
     }
@@ -128,6 +131,7 @@ public class MainClockControl : MonoBehaviour
     // ===================== 生成可解谜状态 =====================
     public void GenerateSolvablePuzzle()
     {
+        string password = "";
         // 1. 清空
         foreach (var ring in rings)
             for (int i = 0; i < 12; i++)
@@ -141,12 +145,15 @@ public class MainClockControl : MonoBehaviour
             ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Blue], offset)]   = SlotColor.Blue;
             ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Yellow], offset)] = SlotColor.Yellow;
             ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Red], offset)]    = SlotColor.Red;
+            password += numberPositions[offset].ToString(); 
         }
         
         // 4. 干扰色
         FillNoiseColors();
         
         UpdateVisuals();
+        Debug.Log($"谜题密码（仅供调试）: {password}");
+        GameManager.Instance.puzzlePasswords["ClockPuzzle"] = password;
     }
     
     void UpdateVisuals()
@@ -192,7 +199,6 @@ public class MainClockControl : MonoBehaviour
             case SlotColor.Yellow: return Color.yellow;
             case SlotColor.Blue: return Color.blue;
             default: return Color.green;
-            
         }
     }
 
