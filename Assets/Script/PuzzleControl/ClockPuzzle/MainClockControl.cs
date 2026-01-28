@@ -1,0 +1,250 @@
+using System.Collections.Generic;
+using TMPro;
+using UnityEngine;
+
+public class MainClockControl : MonoBehaviour
+{
+    [Header("UI")]
+    public GameObject numberPrefab;
+    public GameObject numberClock;
+
+    private float radius;
+
+    [Range(0, 360)]
+    public float startAngleOffset = 90f;
+    
+    public GameObject colorMarkerPrefab;
+    public int[] targetPositions;
+    // ===================== 枚举定义 =====================
+    public enum SlotColor
+    {
+        None = 0,
+        Red = 1,
+        Yellow = 2,
+        Blue = 3
+    }
+
+    // ===================== 轮盘数据 =====================
+    [System.Serializable]
+    public class RingData
+    {
+        public RectTransform ringTransform;
+        
+        private SlotColor[] slots = new SlotColor[12];
+        public SlotColor[] Slots => slots;
+    }
+
+    public List<RingData> rings = new List<RingData>();
+
+    // ===================== Unity =====================
+    void Start()
+    {
+        targetPositions= GetRandomPositions(3, 12);
+        GenerateNumbers();
+        GenerateSolvablePuzzle();
+        PrintCurrentState();
+    }
+
+    // ===================== 数字生成 =====================
+    void GenerateNumbers()
+    {
+        radius = numberClock.GetComponent<RectTransform>().rect.width / 2f * 0.95f;
+        for (int i = 1; i <= 12; i++)
+        {
+            float angle = startAngleOffset - (i * 30f);
+            float radian = angle * Mathf.Deg2Rad;
+
+            float x = Mathf.Cos(radian) * radius;
+            float y = Mathf.Sin(radian) * radius;
+
+            GameObject numObj = Instantiate(numberPrefab, numberClock.transform);
+            RectTransform rect = numObj.GetComponent<RectTransform>();
+            rect.anchoredPosition = new Vector2(x, y);
+
+            numObj.transform.localRotation = Quaternion.Euler(0, 0, -(i * 30f));
+            numObj.GetComponentInChildren<TMP_Text>().text = Random.Range(0, 10).ToString();
+            numObj.name = $"Num_{i}";
+        }
+    }
+
+    // ===================== 解谜判定 =====================
+    public void CheckMultiPointPuzzle()
+    {
+        PrintCurrentState();
+        bool blueOK   = IsColorMatchAtPosition(targetPositions[(int)SlotColor.Blue], SlotColor.Blue);
+        bool yellowOK = IsColorMatchAtPosition(targetPositions[(int)SlotColor.Yellow], SlotColor.Yellow);
+        bool redOK    = IsColorMatchAtPosition(targetPositions[(int)SlotColor.Red], SlotColor.Red);
+
+        if (blueOK && yellowOK && redOK)
+        {
+            Debug.Log("<color=lime>解密成功！</color>");
+            OnSolved();
+        }
+    }
+
+    bool IsColorMatchAtPosition(int physPos, SlotColor targetColor)
+    {
+        foreach (var ring in rings)
+        {
+            // 1. 获取当前旋转了多少个“格” (顺时针方向)
+            float z = ring.ringTransform.localEulerAngles.z;
+            int rotationOffset = Mathf.RoundToInt((360f - z) % 360f / 30f);
+
+            // 2. 计算当前物理位置对应的数组索引
+            int dataIndex = (physPos - rotationOffset) % 12;
+            if (dataIndex < 0) dataIndex += 12;
+
+            if (ring.Slots[dataIndex] != targetColor)
+                return false;
+        }
+        return true;
+    }
+    
+    public int[] GetRandomPositions(int count, int max)
+    {
+        // 1. 准备一个包含 0-11 的候选列表
+        List<int> candidates = new List<int>();
+        for (int i = 0; i < max; i++) candidates.Add(i);
+
+        int[] results = new int[count+1];
+
+        // 2. 循环抽取
+        for (int i = 1; i < count+1; i++)
+        {
+            int randomIndex = Random.Range(0, candidates.Count); // 随机选一个索引
+            results[i] = candidates[randomIndex];              // 记录数值
+            candidates.RemoveAt(randomIndex);                   // 【关键】从候选名单移除
+        }
+
+        results[0] = -1;
+        return results;
+    }
+    
+    void OnSolved()
+    {
+        // GameManager.Instance.OnClockSolved();
+    }
+
+    // ===================== 生成可解谜状态 =====================
+    public void GenerateSolvablePuzzle()
+    {
+        // 1. 清空
+        foreach (var ring in rings)
+            for (int i = 0; i < 12; i++)
+                ring.Slots[i] = SlotColor.None;
+
+        // 3. 随机初始旋转 + 写入答案
+        foreach (var ring in rings)
+        {
+            int offset = Random.Range(0, 12);
+            ring.ringTransform.localEulerAngles = new Vector3(0, 0, offset * 30f);
+            ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Blue], offset)]   = SlotColor.Blue;
+            ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Yellow], offset)] = SlotColor.Yellow;
+            ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Red], offset)]    = SlotColor.Red;
+        }
+        
+        // 4. 干扰色
+        FillNoiseColors();
+        
+        UpdateVisuals();
+    }
+    
+    void UpdateVisuals()
+    {
+        for (int i = 0; i < rings.Count; i++)
+        {
+            float ringRadius = rings[i].ringTransform.rect.width / 2f * 0.8f;
+
+            // 🔴 清理旧 Marker（非常重要）
+            for (int c = rings[i].ringTransform.childCount - 1; c >= 0; c--)
+            {
+                Transform child = rings[i].ringTransform.GetChild(c);
+                if (child.name.StartsWith("Marker_"))
+                    Destroy(child.gameObject);
+            }
+
+            for (int dataIndex = 0; dataIndex < 12; dataIndex++)
+            {
+                SlotColor color = rings[i].Slots[dataIndex];
+                if (color == SlotColor.None) continue;
+                if(Random.Range(0, 10) > 7) continue;
+                // 数据索引 0 就是正上方
+                float angle = startAngleOffset - dataIndex * 30f;
+                float radian = angle * Mathf.Deg2Rad;
+
+                float x = Mathf.Cos(radian) * ringRadius;
+                float y = Mathf.Sin(radian) * ringRadius;
+
+                GameObject marker = Instantiate(colorMarkerPrefab, rings[i].ringTransform);
+                marker.name = $"Marker_{dataIndex}";
+                marker.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
+                marker.GetComponent<UnityEngine.UI.Image>().color = GetUIColor(color);
+            }
+        }
+    }
+
+
+    Color GetUIColor(SlotColor color)
+    {
+        switch (color)
+        {
+            case SlotColor.Red: return Color.red;
+            case SlotColor.Yellow: return Color.yellow;
+            case SlotColor.Blue: return Color.blue;
+            default: return Color.green;
+            
+        }
+    }
+
+    int CalcIndex(int physPos, int offset)
+    {
+        int idx = (physPos - offset) % 12;
+        return idx < 0 ? idx + 12 : idx;
+    }
+
+    void FillNoiseColors()
+    {
+        foreach (var ring in rings)
+        {
+            int count = Random.Range(1, 4);
+            for (int i = 0; i < count; i++)
+            {
+                int idx = Random.Range(0, 12);
+                if (ring.Slots[idx] == SlotColor.None)
+                {
+                    ring.Slots[idx] = (SlotColor)Random.Range(1, 4);
+                }
+            }
+        }
+    }
+
+    // ===================== 调试输出 =====================
+    void PrintCurrentState()
+    {
+        Debug.Log("Target Positions: " +
+                  $"Blue at {targetPositions[(int)SlotColor.Blue]}, " +
+                  $"Yellow at {targetPositions[(int)SlotColor.Yellow]}, " +
+                  $"Red at {targetPositions[(int)SlotColor.Red]}");
+        Debug.Log("<color=cyan>=== 当前轮盘状态 ===</color>");
+
+        for (int i = 0; i < rings.Count; i++)
+        {
+            int offset = Mathf.RoundToInt(rings[i].ringTransform.localEulerAngles.z / 30f);
+            int topIdx = (0 - offset) % 12;
+            if (topIdx < 0) topIdx += 12;
+
+            string line = $"<b>Ring {i}</b> (偏移:{offset}): ";
+
+            for (int j = 0; j < 12; j++)
+            {
+                string v = rings[i].Slots[j].ToString();
+                if (j == topIdx)
+                    line += $"<color=yellow>[{v}]</color> ";
+                else
+                    line += v + " ";
+            }
+
+            Debug.Log(line);
+        }
+    }
+}
