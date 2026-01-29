@@ -18,6 +18,7 @@ public class SudokuManager: MonoBehaviour
     public Sprite[] numberSprites;
     public Sprite[] vitalNumberSprites;
     public Sprite[] patternSprites;
+    public int emptyCount;
     public static SudokuManager Instance { get; private set; }
     private List<DetectCell> cells = new List<DetectCell>();
     // 0 表示空
@@ -33,15 +34,15 @@ public class SudokuManager: MonoBehaviour
             return;
         }
         Instance = this;
-        SudokuGenerator sudokuGenerator = new SudokuGenerator();
-        puzzle = sudokuGenerator.Generate(10); // 生成一个有40个空格的数独谜题
-        solution = sudokuGenerator.GetSolution(); // 获取对应的解
-        printBoard();
-        currentState = puzzle;
     }
 
     void Start()
     {
+        SudokuGenerator sudokuGenerator = new SudokuGenerator();
+        puzzle = sudokuGenerator.Generate(emptyCount); // 生成一个有40个空格的数独谜题
+        solution = sudokuGenerator.GetSolution(); // 获取对应的解
+        printBoard();
+        currentState = puzzle;
         GenerateBoard();
     }
     public List<int> GetRandomPositions(int count, List<int> candidates)
@@ -180,6 +181,30 @@ public class SudokuManager: MonoBehaviour
         int row = index / 9;
         int col = index % 9;
         currentState[row, col] = number;
+        if (CheckWin())
+        {
+            Onwin();
+        }
+    }
+
+    public void Onwin()
+    {
+        Debug.Log("Onwin");
+    }
+    public bool CheckWin()
+    {
+        for (int r = 0; r < 9; r++)
+        {
+            for (int c = 0; c < 9; c++)
+            {
+                if (currentState[r, c] == 0)
+                    return false; // 还有空
+
+                if (currentState[r, c] != solution[r, c])
+                    return false; // 有错误
+            }
+        }
+        return true; // 全对
     }
     
     public void printMatrix()

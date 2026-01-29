@@ -145,7 +145,9 @@ public class MainClockControl : MonoBehaviour
             ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Blue], offset)]   = SlotColor.Blue;
             ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Yellow], offset)] = SlotColor.Yellow;
             ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Red], offset)]    = SlotColor.Red;
-            password += numberPositions[(offset - 1)%12].ToString(); 
+            int index = (offset - 1)%12;
+            if (index < 0) index += 12;
+            password += numberPositions[index].ToString(); 
         }
 
         foreach (var ring in rings)
