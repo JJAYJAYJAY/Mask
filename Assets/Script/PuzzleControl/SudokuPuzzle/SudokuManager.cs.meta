@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: fd19d2744b2d4a888031d294903b8495
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences:
+  - cellPrefab: {fileID: 1393458912332726208, guid: 62a961feaa7cd1a43a2337ad165eb0a7,
+      type: 3}
+  - vitalCellPrefab: {fileID: 1393458912332726208, guid: 06c48b89c8d716349bcc22d10aebd4bf,
+      type: 3}
+  - emptySlotPrefab: {fileID: 1393458912332726208, guid: eeaf06080691c904ea3642d9ea7c2858,
+      type: 3}
+  - vitalBoard: {instanceID: 0}
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

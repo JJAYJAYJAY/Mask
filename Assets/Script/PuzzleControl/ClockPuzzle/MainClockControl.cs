@@ -141,13 +141,18 @@ public class MainClockControl : MonoBehaviour
         foreach (var ring in rings)
         {
             int offset = Random.Range(0, 12);
-            ring.ringTransform.localEulerAngles = new Vector3(0, 0, offset * 30f);
+            ring.ringTransform.localEulerAngles = new Vector3(0, 0, offset * -30f);
             ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Blue], offset)]   = SlotColor.Blue;
             ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Yellow], offset)] = SlotColor.Yellow;
             ring.Slots[CalcIndex(targetPositions[(int)SlotColor.Red], offset)]    = SlotColor.Red;
-            password += numberPositions[offset].ToString(); 
+            password += numberPositions[(offset - 1)%12].ToString(); 
         }
-        
+
+        foreach (var ring in rings)
+        {
+            int offset = Random.Range(0, 12);
+            ring.ringTransform.localEulerAngles = new Vector3(0, 0, offset * -30f);
+        }
         // 4. 干扰色
         FillNoiseColors();
         
@@ -174,7 +179,7 @@ public class MainClockControl : MonoBehaviour
             {
                 SlotColor color = rings[i].Slots[dataIndex];
                 if (color == SlotColor.None) continue;
-                if(Random.Range(0, 10) > 7) continue;
+                
                 // 数据索引 0 就是正上方
                 float angle = startAngleOffset - dataIndex * 30f;
                 float radian = angle * Mathf.Deg2Rad;

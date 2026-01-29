@@ -141,10 +141,10 @@ MonoBehaviour:
     type: 3}
   targetPositions: 
   rings:
-  - ringTransform: {fileID: 2133603952232226351}
-  - ringTransform: {fileID: 941306523022781656}
-  - ringTransform: {fileID: 5690729554665485790}
   - ringTransform: {fileID: 7434380357311119449}
+  - ringTransform: {fileID: 5690729554665485790}
+  - ringTransform: {fileID: 941306523022781656}
+  - ringTransform: {fileID: 2133603952232226351}
 --- !u!1 &1850123842446588789
 GameObject:
   m_ObjectHideFlags: 0
