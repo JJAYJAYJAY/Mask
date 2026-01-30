@@ -179,6 +179,7 @@ MonoBehaviour:
   patternSprites:
   - {fileID: -1601229289, guid: 3325aecaa6eda7b42819c6e22da2e566, type: 3}
   - {fileID: -1965630627, guid: 3325aecaa6eda7b42819c6e22da2e566, type: 3}
+  emptyCount: 30
 --- !u!1 &3331663087872658040
 GameObject:
   m_ObjectHideFlags: 0
