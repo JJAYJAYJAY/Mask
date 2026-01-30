@@ -5,12 +5,14 @@ using UnityEngine.UI;
 public class DragCell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Transform originalParent;      // 拖拽前父物体
+    public SudokuManager sudokuManager;
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     private GameObject placeholder;       // 占位符
 
     private DetectCell originCell;              // 如果是棋盘内拖拽，记录原格子
     public int number;                     // 碎片数字
+    
     private void Awake()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -19,6 +21,9 @@ public class DragCell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
 public void OnBeginDrag(PointerEventData eventData)
 {
+    
+    sudokuManager.PlayPickupSound();
+    
     originalParent = transform.parent;
     originCell = originalParent.GetComponent<DetectCell>();
 
@@ -26,7 +31,7 @@ public void OnBeginDrag(PointerEventData eventData)
     if (originCell != null)
     {
         // 清空数独数据
-        SudokuManager.Instance.modifyCurrentState(originCell.index, 0);
+        sudokuManager.modifyCurrentState(originCell.index, 0);
         originCell.currentPiece = null;
 
         // 创建占位符（稳住 GridLayout）
@@ -64,6 +69,7 @@ public void OnDrag(PointerEventData eventData)
 
 public void OnEndDrag(PointerEventData eventData)
 {
+    sudokuManager.PlayDropSound();
     canvasGroup.blocksRaycasts = true;
 
     foreach (DetectCell cell in FindObjectsOfType<DetectCell>())
@@ -89,7 +95,7 @@ public void OnEndDrag(PointerEventData eventData)
                 other.transform.localPosition = Vector3.zero;
                 originCell.currentPiece = other;
 
-                SudokuManager.Instance.modifyCurrentState(
+                sudokuManager.modifyCurrentState(
                     originCell.index,
                     other.number
                 );
@@ -107,13 +113,13 @@ public void OnEndDrag(PointerEventData eventData)
         transform.localPosition = Vector3.zero;
         cellTarget.currentPiece = this;
 
-        SudokuManager.Instance.modifyCurrentState(
+        sudokuManager.modifyCurrentState(
             cellTarget.index,
             number
         );
 
         if (placeholder != null) Destroy(placeholder);
-        SudokuManager.Instance.printMatrix();
+        sudokuManager.printMatrix();
         return;
     }
 
@@ -146,7 +152,7 @@ public void OnEndDrag(PointerEventData eventData)
         // 👉 如果来自棋盘，占位符已经存在，直接销毁
         if (placeholder != null)
             Destroy(placeholder);
-        SudokuManager.Instance.printMatrix();
+        sudokuManager.printMatrix();
         return;
     }
 
@@ -160,7 +166,7 @@ public void OnEndDrag(PointerEventData eventData)
     if (originCell != null)
     {
         originCell.currentPiece = this;
-        SudokuManager.Instance.modifyCurrentState(
+        sudokuManager.modifyCurrentState(
             originCell.index,
             number
         );

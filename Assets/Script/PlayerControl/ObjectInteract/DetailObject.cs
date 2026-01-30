@@ -11,6 +11,7 @@ public class DetailObject : BaseInteractable
 
     public void OnBackButton()
     {
+        Debug.Log("OnBackButton");
         panel.CloseToWorldPos(transform.position);
     }
 }

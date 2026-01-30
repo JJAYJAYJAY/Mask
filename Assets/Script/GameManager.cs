@@ -9,7 +9,8 @@ public class GameManager : MonoBehaviour
     public Dictionary<string, string> puzzlePasswords = new Dictionary<string, string>();
     [Header("UI References")]
     [SerializeField] private CanvasGroup globalBlocker; // 拖入带 CanvasGroup 的全屏遮罩
-
+    
+    public ItemDatabase database;
     private void Awake()
     {
         // 确保场景中只有一个 GameManager
@@ -61,5 +62,10 @@ public class GameManager : MonoBehaviour
             res += Random.Range(0, 10).ToString();
         }
         return res;
+    }
+    
+    public ItemData GetItem(string id)
+    {
+        return database.GetItem(id);
     }
 }

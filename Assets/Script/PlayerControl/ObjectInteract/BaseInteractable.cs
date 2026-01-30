@@ -20,7 +20,6 @@ public abstract class BaseInteractable : MonoBehaviour
 
     protected virtual void OnMouseEnter()
     {
-        Debug.Log("OnMouseEnter");
         if (IsPointerBlocked()) return;
         if (mat != null)
             mat.color = hoverColor;

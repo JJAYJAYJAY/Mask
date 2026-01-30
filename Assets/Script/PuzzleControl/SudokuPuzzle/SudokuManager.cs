@@ -6,6 +6,7 @@ using Random = UnityEngine.Random;
 
 public class SudokuManager: MonoBehaviour
 {
+    [Header("Prefab References")]
     public GameObject cellPrefab;
     public GameObject vitalCellPrefab;
     public GameObject emptySlotPrefab;
@@ -15,11 +16,17 @@ public class SudokuManager: MonoBehaviour
     public GameObject dataBoard;
     public GameObject pieceArea;
     
+    [Header("Sprite References")]
     public Sprite[] numberSprites;
     public Sprite[] vitalNumberSprites;
     public Sprite[] patternSprites;
     public int emptyCount;
-    public static SudokuManager Instance { get; private set; }
+    
+    [Header("audio")]
+    public AudioSource audioSource;
+    public  AudioClip cellPickupClip;
+    public  AudioClip cellPlaceClip;
+    // public static SudokuManager Instance { get; private set; }
     private List<DetectCell> cells = new List<DetectCell>();
     // 0 表示空
     int[,] puzzle;
@@ -28,12 +35,12 @@ public class SudokuManager: MonoBehaviour
     private int[,] currentState; 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
+        // if (Instance != null && Instance != this)
+        // {
+        //     Destroy(gameObject);
+        //     return;
+        // }
+        // Instance = this;
     }
 
     void Start()
@@ -144,10 +151,10 @@ public class SudokuManager: MonoBehaviour
                     RectTransform rt = pieceGO.GetComponent<RectTransform>();
                     rt.localScale = Vector3.one;
 
-                    float xOffset = Random.Range(-pieceArea.GetComponent<RectTransform>().rect.width / 2 + 30,
-                        pieceArea.GetComponent<RectTransform>().rect.width / 2 - 30);
-                    float yOffset = Random.Range(-pieceArea.GetComponent<RectTransform>().rect.height / 2 + 30,
-                        pieceArea.GetComponent<RectTransform>().rect.height / 2 - 30);
+                    float xOffset = Random.Range(-pieceArea.GetComponent<RectTransform>().rect.width / 2 + 75,
+                        pieceArea.GetComponent<RectTransform>().rect.width / 2 - 75);
+                    float yOffset = Random.Range(-pieceArea.GetComponent<RectTransform>().rect.height / 2 + 75,
+                        pieceArea.GetComponent<RectTransform>().rect.height / 2 - 75);
                     rt.anchoredPosition = new Vector2(xOffset, yOffset);
 
                     // 确保挂载 Piece 组件
@@ -155,6 +162,7 @@ public class SudokuManager: MonoBehaviour
                         pieceGO.AddComponent<DragCell>();
                 
                     pieceGO.GetComponent<DragCell>().number = number;
+                    pieceGO.GetComponent<DragCell>().sudokuManager = this;
                     // 确保挂载 CanvasGroup
                     if (pieceGO.GetComponent<CanvasGroup>() == null)
                     {
@@ -234,5 +242,21 @@ public class SudokuManager: MonoBehaviour
             output += "\n";
         }
         Debug.Log(output);
+    }
+    
+    public void PlayPickupSound()
+    {
+        if (audioSource != null && cellPickupClip != null)
+        {
+            audioSource.PlayOneShot(cellPickupClip);
+        }
+    }
+    
+    public void PlayDropSound()
+    {
+        if (audioSource != null && cellPlaceClip != null)
+        {
+            audioSource.PlayOneShot(cellPlaceClip);
+        }
     }
 }
