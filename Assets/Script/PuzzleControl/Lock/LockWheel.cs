@@ -5,60 +5,65 @@ public class LockWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 {
     public RectTransform content;
     public float itemHeight = 100f;
-    public int digitCount = 9;
+    public int digitCount = 10;
+    public LockManager manager;
 
-    private float initialY; // 记录初始偏移
-    public int CurrentValue { get; private set; } = 1;
+    private float initialY; 
+    public int CurrentValue { get; private set; } = 0;
 
     void Awake()
     {
-        // 1. 初始化时记录下你说的那个 50 的偏移
-        initialY = 50;
+        // 记录面板静止在数字 '0' 时的初始坐标
+        initialY = content.anchoredPosition.y;
     }
 
-    public void OnBeginDrag(PointerEventData eventData) { /* 保持不变 */ }
+    public void OnBeginDrag(PointerEventData eventData) { }
 
     public void OnDrag(PointerEventData eventData)
     {
-        // 直接增加 delta 没问题
-        content.anchoredPosition += Vector2.up * eventData.delta.y;
+        // 允许自由拖动
+        Vector2 pos = content.anchoredPosition;
+        pos.y += eventData.delta.y;
+
+        content.anchoredPosition = pos;
         LoopContent();
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
         SnapToNearest();
+        if(manager != null) manager.CheckPassword();
     }
     
     void SnapToNearest()
     {
-        // 2. 计算时减去初始偏移，得到“纯净”的位移
+        // 1️⃣ 当前相对偏移
         float relativeY = content.anchoredPosition.y - initialY;
-        
-        // 注意：如果你向上滚，y 变大，index 应该是负值，所以这里用 -relativeY
-        int index = Mathf.RoundToInt(-relativeY / itemHeight);
 
-        // 3. 回弹时要把初始偏移加回来
-        float targetY = initialY - (index * itemHeight);
-        content.anchoredPosition = new Vector2(content.anchoredPosition.x, targetY);
+        // 2️⃣ 计算最近的格子索引（允许无限）
+        int rawIndex = Mathf.RoundToInt(relativeY / itemHeight);
 
-        // 4. 计算当前数值
-        int finalValue = index % digitCount;
-        if (finalValue < 0) finalValue += digitCount;
-        
-        // 如果你的滚轮是从 1 开始而不是 0，这里可能需要 +1
-        CurrentValue = finalValue; 
+        // 3️⃣ 吸附到该格子
+        float targetY = initialY + rawIndex * itemHeight;
+        content.anchoredPosition = new Vector2(
+            content.anchoredPosition.x,
+            targetY
+        );
+
+        // 4️⃣ 映射为 0-9 的数值
+        CurrentValue = ((rawIndex % digitCount) + digitCount) % digitCount;
     }
 
+    
     void LoopContent()
     {
         float totalHeight = itemHeight * digitCount;
         Vector2 pos = content.anchoredPosition;
 
         // 5. 循环判断也要基于初始偏移量
-        if (pos.y - initialY > totalHeight / 2f) 
+        if (-(initialY - pos.y) > totalHeight) 
             pos.y -= totalHeight;
-        else if (pos.y - initialY < -totalHeight / 2f)
+        else if (-(initialY - pos.y) < 0)
             pos.y += totalHeight;
 
         content.anchoredPosition = pos;

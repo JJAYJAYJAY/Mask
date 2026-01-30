@@ -5,10 +5,15 @@ using UnityEngine;
 public class MainClockControl : MonoBehaviour
 {
     //TODO 声音系统
+    [Header("Audio")]
+    public AudioSource rotateSound;
+    public AudioSource redMatchSound;
+    public AudioSource blueMatchSound;
+    public AudioSource yellowMatchSound;
+    
     [Header("UI")]
     public GameObject numberPrefab;
     public GameObject numberClock;
-
     private float radius;
 
     [Range(0, 360)]

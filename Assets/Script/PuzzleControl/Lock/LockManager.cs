@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 
 public class LockManager : MonoBehaviour
@@ -5,19 +6,39 @@ public class LockManager : MonoBehaviour
     public LockWheel[] wheels;
     public int[] correctPassword;
 
-    public bool CheckPassword()
+    public TextMeshProUGUI correctNumText;
+
+    void Start()
     {
+        SetPassword("1234");
+    }
+    public void CheckPassword()
+    {
+        int count = 0;
+        bool flag = true;
         if (wheels.Length != correctPassword.Length)
-            return false;
+            return ;
 
         for (int i = 0; i < wheels.Length; i++)
         {
+            Debug.Log(wheels[i].gameObject.name+":"+ wheels[i].CurrentValue);
+            if (wheels[i].CurrentValue == correctPassword[i]) count++;
             if (wheels[i].CurrentValue != correctPassword[i])
-                return false;
+                flag=false;
         }
-        return true;
+        if (correctNumText != null)
+            correctNumText.text = "正确密码位数："+count + "/" + wheels.Length;
+        if (flag)
+        {
+            Onsuccess();
+        }
     }
 
+    public void Onsuccess()
+    {
+        
+    }
+    
     public void SetPassword(string password)
     {
         if (password.Length != wheels.Length)
@@ -41,5 +62,5 @@ public class LockManager : MonoBehaviour
             correctPassword[i] = c - '0';
         }
     }
-
+    
 }
