@@ -34,6 +34,7 @@ public class InventoryItemUI : MonoBehaviour,
     {
         startPos = rect.anchoredPosition;
         transform.SetAsLastSibling(); // 拖到最上层
+        GameManager.Instance.showText(item.description);
     }
 
     public void OnDrag(PointerEventData eventData)

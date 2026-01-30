@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: New Item Data
   m_EditorClassIdentifier: 
   itemID: 1
-  itemName: 
-  icon: {fileID: 0}
-  type: 0
+  itemName: 1
+  icon: {fileID: 26227381, guid: 238fae09971e6254ead185c04091299c, type: 3}
+  type: 1
+  width: 192.9
+  height: 200
   description: 
