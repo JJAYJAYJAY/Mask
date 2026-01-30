@@ -133,6 +133,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 872cb8e6e3e02fc45a8d99d5515126ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotateSound: {fileID: 0}
+  redMatchSound: {fileID: 0}
+  blueMatchSound: {fileID: 0}
+  yellowMatchSound: {fileID: 0}
   numberPrefab: {fileID: 6152436664436962316, guid: 2af9bbaa2f1c93647858c8345ba61be0,
     type: 3}
   numberClock: {fileID: 1850123842446588789}
@@ -370,6 +374,7 @@ GameObject:
   - component: {fileID: 3673445926422952906}
   - component: {fileID: 2365282861527965285}
   - component: {fileID: 8480438366423392596}
+  - component: {fileID: 1525199286136818964}
   m_Layer: 5
   m_Name: ClockPuzzle
   m_TagString: Untagged
@@ -421,7 +426,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.043137256}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -450,6 +455,19 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1525199286136818964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3802003954041122601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a3814187d864fc2a780c8fa041e12d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animSpeed: 5
 --- !u!1 &4814085199068958257
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,6 +713,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.a
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7122490559738144745, guid: a10f5bc766d0eff46a7e862026970d50,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3802003954041122601}
+    - target: {fileID: 7122490559738144745, guid: a10f5bc766d0eff46a7e862026970d50,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
