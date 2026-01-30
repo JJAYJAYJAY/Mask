@@ -10,7 +10,6 @@ public class LockManager : MonoBehaviour
 
     void Start()
     {
-        SetPassword("1234");
     }
     public void CheckPassword()
     {

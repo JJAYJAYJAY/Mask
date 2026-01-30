@@ -26,8 +26,14 @@ public class SudokuManager: MonoBehaviour
     public AudioSource audioSource;
     public  AudioClip cellPickupClip;
     public  AudioClip cellPlaceClip;
+    [Header("UI References")]
+    public Image[] answerSlots;
     // public static SudokuManager Instance { get; private set; }
     private List<DetectCell> cells = new List<DetectCell>();
+    private List<int> vitalPositions = new List<int>();
+
+    private string password;
+    
     // 0 表示空
     int[,] puzzle;
     int[,] solution;
@@ -45,12 +51,19 @@ public class SudokuManager: MonoBehaviour
 
     void Start()
     {
+        emptyCount=Math.Min(5,emptyCount);
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
         puzzle = sudokuGenerator.Generate(emptyCount); // 生成一个有40个空格的数独谜题
         solution = sudokuGenerator.GetSolution(); // 获取对应的解
         printBoard();
         currentState = puzzle;
         GenerateBoard();
+        foreach (var item in vitalPositions)
+        {
+            password+=solution[item/9,item%9].ToString();
+        }
+
+        GameManager.Instance.puzzlePasswords["SudokuPuzzle"] = password;
     }
     public List<int> GetRandomPositions(int count, List<int> candidates)
     {
@@ -81,20 +94,20 @@ public class SudokuManager: MonoBehaviour
             }
         }
         //在vitalBoard上随机4个点坐标生成 Vitalcell
-        List<int> positions = GetRandomPositions(4, candidates);
+        vitalPositions = GetRandomPositions(4, candidates);
         // 创建81个空物体
         for (int i = 0; i < 81; i++)
         {
             GameObject go;
 
-            if (positions.Contains(i))
+            if (vitalPositions.Contains(i))
             {
                 // VitalCell
                 go = Instantiate(vitalCellPrefab, vitalBoard.transform);
                 Image img = go.transform.Find("Number").GetComponent<Image>();
-                for (int j = 0; j < positions.Count; j++)
+                for (int j = 0; j < vitalPositions.Count; j++)
                 {
-                    if(positions[j] == i) img.sprite = vitalNumberSprites[j];   
+                    if(vitalPositions[j] == i) img.sprite = vitalNumberSprites[j];   
                 }
             }
             else
@@ -197,8 +210,18 @@ public class SudokuManager: MonoBehaviour
 
     public void Onwin()
     {
-        Debug.Log("Onwin");
+        showAnswer();
     }
+
+    public void showAnswer()
+    {
+        for(int i=0;i<answerSlots.Length;i++)
+        {
+            answerSlots[i].color = new Color(1, 1, 1, 1);
+            answerSlots[i].sprite = numberSprites[solution[vitalPositions[i]/9,vitalPositions[i]%9]];
+        }
+    }
+
     public bool CheckWin()
     {
         for (int r = 0; r < 9; r++)

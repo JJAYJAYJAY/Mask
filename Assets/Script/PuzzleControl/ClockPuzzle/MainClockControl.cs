@@ -21,6 +21,8 @@ public class MainClockControl : MonoBehaviour
     
     public GameObject colorMarkerPrefab;
     public int[] targetPositions;
+    
+    public Sprite[] ColorSprites;
     // ===================== 枚举定义 =====================
     public enum SlotColor
     {
@@ -171,8 +173,26 @@ public class MainClockControl : MonoBehaviour
     void UpdateVisuals()
     {
         for (int i = 0; i < rings.Count; i++)
-        {
-            float ringRadius = rings[i].ringTransform.rect.width / 2f * 0.8f;
+        {;
+            float ringRadius;
+            switch (i)
+            {
+                case 3:
+                    ringRadius = rings[i].ringTransform.rect.width / 2f * 0.5f;
+                    break;
+                case 2:
+                    ringRadius = rings[i].ringTransform.rect.width / 2f * 0.65f; 
+                    break;
+                case 1:
+                    ringRadius = rings[i].ringTransform.rect.width / 2f * 0.7f;
+                    break;
+                case 0:
+                    ringRadius = rings[i].ringTransform.rect.width / 2f * 0.75f;
+                    break;
+                default:
+                    ringRadius = rings[i].ringTransform.rect.width / 2f * 0.8f;
+                    break;
+            }
 
             // 🔴 清理旧 Marker（非常重要）
             for (int c = rings[i].ringTransform.childCount - 1; c >= 0; c--)
@@ -197,20 +217,21 @@ public class MainClockControl : MonoBehaviour
                 GameObject marker = Instantiate(colorMarkerPrefab, rings[i].ringTransform);
                 marker.name = $"Marker_{dataIndex}";
                 marker.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
-                marker.GetComponent<UnityEngine.UI.Image>().color = GetUIColor(color);
+                marker.GetComponent<RectTransform>().localScale = new Vector3((4-i)*0.8f+1, (4-i)*0.8f+1, (4-i)*0.8f+1);
+                marker.GetComponent<UnityEngine.UI.Image>().sprite = GetUISprite(color);
             }
         }
     }
 
 
-    Color GetUIColor(SlotColor color)
+    Sprite GetUISprite(SlotColor color)
     {
         switch (color)
         {
-            case SlotColor.Red: return Color.red;
-            case SlotColor.Yellow: return Color.yellow;
-            case SlotColor.Blue: return Color.blue;
-            default: return Color.green;
+            case SlotColor.Red: return ColorSprites[0];
+            case SlotColor.Yellow: return ColorSprites[1];
+            case SlotColor.Blue: return ColorSprites[2];
+            default: return null;
         }
     }
 

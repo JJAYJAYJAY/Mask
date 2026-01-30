@@ -37,5 +37,10 @@ public class Inventory : MonoBehaviour
         items.Remove(item);
         InventoryUI.Instance.RemoveItem(item);
     }
+
+    public bool HasItem(ItemData item)
+    {
+        return items.Contains(item);
+    }
 }
 
