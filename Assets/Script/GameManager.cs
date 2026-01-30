@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
@@ -9,7 +10,8 @@ public class GameManager : MonoBehaviour
     public Dictionary<string, string> puzzlePasswords = new Dictionary<string, string>();
     [Header("UI References")]
     [SerializeField] private CanvasGroup globalBlocker; // 拖入带 CanvasGroup 的全屏遮罩
-    
+
+    public TextMeshProUGUI text;
     public ItemDatabase database;
     private void Awake()
     {
@@ -67,5 +69,10 @@ public class GameManager : MonoBehaviour
     public ItemData GetItem(string id)
     {
         return database.GetItem(id);
+    }
+    
+    public void showText(string content)
+    {
+        text.text = content;
     }
 }
