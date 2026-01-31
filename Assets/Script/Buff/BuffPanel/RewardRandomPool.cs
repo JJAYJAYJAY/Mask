@@ -60,7 +60,7 @@ public class RewardRandomPool
         {
             // belong = 面具物品 id
             var maskMeta = allObjects.Find(o => o.MaskType == buff.belong);
-            if (maskMeta != null && Inventory.Instance.HasItem(maskMeta) && !BuffManager.Instance.HasBuff(buff))
+            if ((GameManager.Instance.globalRuleData.BreakMaskLimits)||(maskMeta != null && Inventory.Instance.HasItem(maskMeta) && !BuffManager.Instance.HasBuff(buff)))
             {
                 buffPool.Add(buff);
             }
@@ -105,5 +105,9 @@ public class RewardRandomPool
         {
             Debug.Log(buff.buffName);
         }
+    }
+    public void OnMakeLimitsChanged(bool flag)
+    {
+        RebuildBuffPool();
     }
 }

@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
     // 不同的谜题不同的密码用map存 //随机生成
     public Dictionary<string, string> puzzlePasswords = new Dictionary<string, string>();
     // 全局buff规则
-    public GlobalRuleData Data = new();
+    public GlobalRuleData globalRuleData = new();
     // 随机选择器
     public RewardSelector rewardSelector;
     public RewardRandomPool rewardRandomPool;
@@ -41,6 +41,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         rewardRandomPool = new RewardRandomPool(database.allItems,BuffManager.Instance.allBuffs);
+        globalRuleData.OnBreakMaskLimitsChanged += rewardRandomPool.OnMakeLimitsChanged;
         rewardSelector = new RewardSelector(rewardRandomPool);
     }
 

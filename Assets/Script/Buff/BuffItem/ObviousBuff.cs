@@ -4,7 +4,7 @@
 
     public override void Apply(GlobalRuleData data)
     {
-        //TODO: 随机破坏一个
+        GlobalClockManager.Instance.BreakRandomLock();
     }
 
     public override void Remove(GlobalRuleData data)

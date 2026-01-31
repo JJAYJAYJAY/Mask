@@ -68,8 +68,8 @@ public class SudokuManager: MonoBehaviour
         }
 
         GameManager.Instance.puzzlePasswords["SudokuPuzzle"] = password;
-        lastFlag = GameManager.Instance.Data.SimplifySudoku;
-        GameManager.Instance.Data.OnSimplifySudokuChanged += OnSimplifySudoku;
+        lastFlag = GameManager.Instance.globalRuleData.SimplifySudoku;
+        GameManager.Instance.globalRuleData.OnSimplifySudokuChanged += OnSimplifySudoku;
     }
     public List<int> GetRandomPositions(int count, List<int> candidates)
     {

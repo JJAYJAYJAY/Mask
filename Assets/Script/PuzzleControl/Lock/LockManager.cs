@@ -13,8 +13,8 @@ public class LockManager : MonoBehaviour
     public Button tryButton;
     void Start()
     {
-        GameManager.Instance.Data.OnShowCorrectDigitsChanged += OnshowCorrectDigitsChanged;
-        GameManager.Instance.Data.OnCanBreakLocksChanged += OncanBreakLocksChanged;
+        GameManager.Instance.globalRuleData.OnShowCorrectDigitsChanged += OnshowCorrectDigitsChanged;
+        GameManager.Instance.globalRuleData.OnCanBreakLocksChanged += OncanBreakLocksChanged;
     }
     public void CheckPassword()
     {

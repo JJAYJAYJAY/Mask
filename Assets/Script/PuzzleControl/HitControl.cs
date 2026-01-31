@@ -4,7 +4,7 @@ public class HitControl: MonoBehaviour
 {
      private void Start()
      {
-          GameManager.Instance.Data.OnShowHintTextChanged += OnOnShowHintTextChanged;
+          GameManager.Instance.globalRuleData.OnShowHintTextChanged += OnOnShowHintTextChanged;
      }
      void OnOnShowHintTextChanged(bool flag)
      {

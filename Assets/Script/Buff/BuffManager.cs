@@ -55,13 +55,13 @@ public class BuffManager : MonoBehaviour
 
     public void AddBuff(Buff buff)
     {
-        buff.Apply(GameManager.Instance.Data);
+        buff.Apply(GameManager.Instance.globalRuleData);
         buffs.Add(buff.Meta);
     }
 
     public void RemoveBuff(Buff buff)
     {
-        buff.Remove(GameManager.Instance.Data);
+        buff.Remove(GameManager.Instance.globalRuleData);
         buffs.Remove(buff.Meta);
     }
     

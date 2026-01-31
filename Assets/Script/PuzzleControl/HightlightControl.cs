@@ -6,7 +6,7 @@ public class HightlightControl: MonoBehaviour
 
     void Start()
     {
-        GameManager.Instance.Data.OnHighlightKeyItemsChanged += OnHighlightKeyItemsChanged;
+        GameManager.Instance.globalRuleData.OnHighlightKeyItemsChanged += OnHighlightKeyItemsChanged;
         gameObject.SetActive(false);
     }
 
