@@ -7,10 +7,8 @@ public class LockWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public float itemHeight = 100f;
     public int digitCount = 10;
     public LockManager manager;
-
     private float initialY; 
     public int CurrentValue { get; private set; } = 0;
-
     void Awake()
     {
         // 记录面板静止在数字 '0' 时的初始坐标
@@ -21,6 +19,7 @@ public class LockWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData)
     {
+        
         // 允许自由拖动
         Vector2 pos = content.anchoredPosition;
         pos.y += eventData.delta.y;
@@ -28,7 +27,6 @@ public class LockWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         content.anchoredPosition = pos;
         LoopContent();
     }
-
     public void OnEndDrag(PointerEventData eventData)
     {
         SnapToNearest();

@@ -403,6 +403,10 @@ MonoBehaviour:
   content: {fileID: 6739814425361654321}
   itemHeight: 100
   digitCount: 10
+  manager: {fileID: 0}
+  audioSource: {fileID: 0}
+  audio: {fileID: 8300000, guid: 3e6a4bdeb3174774182862c34ff4aab6, type: 3}
+  soundInterval: 1
 --- !u!1 &4025156645720579282
 GameObject:
   m_ObjectHideFlags: 0

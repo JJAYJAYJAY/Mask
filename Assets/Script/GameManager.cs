@@ -27,10 +27,12 @@ public class GameManager : MonoBehaviour
     // 随机选择器
     public RewardSelector rewardSelector;
     public RewardRandomPool rewardRandomPool;
-    
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public  AudioClip buttonClick;
     [Header("UI References")]
     [SerializeField] private CanvasGroup globalBlocker; // 拖入带 CanvasGroup 的全屏遮罩
-
+    
     public TextMeshProUGUI text;
     public ItemDatabase database;
     private void Awake()
@@ -107,5 +109,10 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(delay);
         text.text = "";
         clearCoroutine = null;
+    }
+
+    public void ButtonClickSound()
+    {
+        audioSource.PlayOneShot(buttonClick);
     }
 }
