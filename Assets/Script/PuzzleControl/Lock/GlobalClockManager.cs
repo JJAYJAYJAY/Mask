@@ -23,6 +23,7 @@ public class GlobalClockManager:MonoBehaviour
     {
         unlockmanagers.Add(lockmanager);
         lockmanagers.Remove(lockmanager);
+        CheckEnd();
     }
 
     public void BreakRandomLock()
@@ -32,5 +33,13 @@ public class GlobalClockManager:MonoBehaviour
         //移除加入
         unlockmanagers.Add(lockmanagers[index]);
         lockmanagers.RemoveAt(index);
+    }
+
+    public void CheckEnd()
+    {
+        if (lockmanagers.Count == 0)
+        {
+            
+        }
     }
 }

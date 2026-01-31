@@ -134,10 +134,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 872cb8e6e3e02fc45a8d99d5515126ea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   rotateSound: {fileID: 0}
-  redMatchSound: {fileID: 0}
-  blueMatchSound: {fileID: 0}
-  yellowMatchSound: {fileID: 0}
   numberPrefab: {fileID: 6152436664436962316, guid: 2af9bbaa2f1c93647858c8345ba61be0,
     type: 3}
   numberClock: {fileID: 1850123842446588789}
@@ -149,6 +147,11 @@ MonoBehaviour:
   - {fileID: 1121753165, guid: ce76e12e903f0a544a15d7e8bd8a0a9b, type: 3}
   - {fileID: -1428670958, guid: ce76e12e903f0a544a15d7e8bd8a0a9b, type: 3}
   - {fileID: 2144010399, guid: ce76e12e903f0a544a15d7e8bd8a0a9b, type: 3}
+  GraySprite: {fileID: 608975677, guid: 8673c797a8037074798440a00affbe6e, type: 3}
+  TargetSprites:
+  - {fileID: 282619630, guid: 68913d447bbb1524eb6f2f2aa9b1f6bb, type: 3}
+  - {fileID: -1075696719, guid: 68913d447bbb1524eb6f2f2aa9b1f6bb, type: 3}
+  - {fileID: -1914672054, guid: 68913d447bbb1524eb6f2f2aa9b1f6bb, type: 3}
   rings:
   - ringTransform: {fileID: 7434380357311119449}
   - ringTransform: {fileID: 5690729554665485790}
