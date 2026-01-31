@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 5
   itemName: "\u795E\u79D8\u9762\u5177"
-  icon: {fileID: 0}
+  icon: {fileID: -1670397586, guid: a2b9824a73f92df4791f2573c2f44787, type: 3}
   type: 0
   weight: -3
   note: 
