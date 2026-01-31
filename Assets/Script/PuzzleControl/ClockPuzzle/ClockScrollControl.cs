@@ -10,7 +10,8 @@ public class ClockScrollControl : MonoBehaviour, IPointerDownHandler, IDragHandl
     private Canvas canvas;
     private float startAngle;
     private float initialRotation;
-
+    
+    public int index;
     void Awake()
     {
         rectTransform = GetComponent<RectTransform>();

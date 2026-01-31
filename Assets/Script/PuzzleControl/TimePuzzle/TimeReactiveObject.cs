@@ -13,17 +13,17 @@ public class TimeEvent
 public class TimeReactiveObject : MonoBehaviour
 {
     public TimeEvent[] events;
-
+    public TimePuzzleManager timePuzzleManager;
     private void OnEnable()
     {
-        TimePuzzleManager.Instance.OnTimeChanged += HandleTimeChanged;
-        HandleTimeChanged(TimePuzzleManager.Instance.hour, TimePuzzleManager.Instance.minute); // 初始化
+        timePuzzleManager.OnTimeChanged += HandleTimeChanged;
+        HandleTimeChanged(timePuzzleManager.hour, timePuzzleManager.minute); // 初始化
     }
 
     private void OnDisable()
     {
-        if (TimePuzzleManager.Instance != null)
-            TimePuzzleManager.Instance.OnTimeChanged -= HandleTimeChanged;
+        if (timePuzzleManager != null)
+            timePuzzleManager.OnTimeChanged -= HandleTimeChanged;
     }
 
     private void HandleTimeChanged(int hour, int minute)

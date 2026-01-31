@@ -5,9 +5,6 @@ using UnityEngine;
 
 public class TimePuzzleManager : MonoBehaviour
 {
-    
-    public static TimePuzzleManager Instance;
-
     [Range(0, 23)] public int hour = 0;
     [Range(0, 59)] public int minute = 0;
 
@@ -16,10 +13,7 @@ public class TimePuzzleManager : MonoBehaviour
 
     private void Awake()
     {
-        if (Instance != null && Instance != this)
-            Destroy(this);
-        else
-            Instance = this;
+       
     }
 
     // 设置时间（UI/闹钟调用）

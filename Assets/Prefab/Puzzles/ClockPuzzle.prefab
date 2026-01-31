@@ -89,6 +89,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainClockControl: {fileID: 5765738152909235767}
+  index: 0
 --- !u!1 &1038439530504142871
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +278,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainClockControl: {fileID: 5765738152909235767}
+  index: 2
 --- !u!1 &3357940329157913096
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainClockControl: {fileID: 5765738152909235767}
+  index: 3
 --- !u!1 &3802003954041122601
 GameObject:
   m_ObjectHideFlags: 0
@@ -600,6 +603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mainClockControl: {fileID: 5765738152909235767}
+  index: 1
 --- !u!1001 &2489480561343706162
 PrefabInstance:
   m_ObjectHideFlags: 0

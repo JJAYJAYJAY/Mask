@@ -8,7 +8,8 @@ public class TimeClockPointer : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     public RectTransform clockCenter; // 闹钟中心点
     private Vector2 centerScreenPos;
-
+    
+    public TimePuzzleManager timePuzzleManager;
     private void Start()
     {
         centerScreenPos = RectTransformUtility.WorldToScreenPoint(null, clockCenter.position);
@@ -37,10 +38,10 @@ public class TimeClockPointer : MonoBehaviour, IDragHandler, IBeginDragHandler
         transform.localEulerAngles = new Vector3(0, 0, angle);
 
         // 更新时间
-        if (TimePuzzleManager.Instance == null) return;
+        if (timePuzzleManager == null) return;
 
-        int hour = TimePuzzleManager.Instance.hour;
-        int minute = TimePuzzleManager.Instance.minute;
+        int hour = timePuzzleManager.hour;
+        int minute = timePuzzleManager.minute;
 
         if (pointerType == PointerType.Minute)
         {
@@ -51,6 +52,6 @@ public class TimeClockPointer : MonoBehaviour, IDragHandler, IBeginDragHandler
             hour = Mathf.RoundToInt(angle / 360f * 12f) % 12;
         }
 
-        TimePuzzleManager.Instance.SetTime(hour, minute);
+        timePuzzleManager.SetTime(hour, minute);
     }
 }

@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     // 不同的谜题不同的密码用map存 //随机生成
     public Dictionary<string, string> puzzlePasswords = new Dictionary<string, string>();
+    public GlobalRuleData Data = new();
+    
     [Header("UI References")]
     [SerializeField] private CanvasGroup globalBlocker; // 拖入带 CanvasGroup 的全屏遮罩
 
@@ -54,17 +56,6 @@ public class GameManager : MonoBehaviour
         }
     }
     
-
-    // 生成指定长度的数字密码
-    string GenerateRandomNumber(int length)
-    {
-        string res = "";
-        for (int i = 0; i < length; i++)
-        {
-            res += Random.Range(0, 10).ToString();
-        }
-        return res;
-    }
     
     public ItemData GetItem(string id)
     {

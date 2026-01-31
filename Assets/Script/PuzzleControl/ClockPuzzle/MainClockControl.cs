@@ -23,6 +23,7 @@ public class MainClockControl : MonoBehaviour
     public int[] targetPositions;
     
     public Sprite[] ColorSprites;
+    private bool[,] previousMatch;
     // ===================== 枚举定义 =====================
     public enum SlotColor
     {
@@ -50,8 +51,17 @@ public class MainClockControl : MonoBehaviour
         targetPositions = GetRandomPositions(3, 12);
         GenerateNumbers();
         GenerateSolvablePuzzle();
-        PrintCurrentState();
     }
+    
+    void Awake()
+    {
+        previousMatch = new bool[rings.Count, 12];
+        // 默认全部 false
+        for (int i = 0; i < rings.Count; i++)
+        for (int j = 0; j < 12; j++)
+            previousMatch[i, j] = false;
+    }
+
 
     // ===================== 数字生成 =====================
     void GenerateNumbers()
@@ -80,7 +90,7 @@ public class MainClockControl : MonoBehaviour
     // ===================== 解谜判定 =====================
     public void CheckMultiPointPuzzle()
     {
-        PrintCurrentState();
+        // PrintCurrentState();
         bool blueOK   = IsColorMatchAtPosition(targetPositions[(int)SlotColor.Blue], SlotColor.Blue);
         bool yellowOK = IsColorMatchAtPosition(targetPositions[(int)SlotColor.Yellow], SlotColor.Yellow);
         bool redOK    = IsColorMatchAtPosition(targetPositions[(int)SlotColor.Red], SlotColor.Red);
@@ -245,7 +255,7 @@ public class MainClockControl : MonoBehaviour
     {
         foreach (var ring in rings)
         {
-            int count = Random.Range(1, 4);
+            int count = Random.Range(2, 6);
             for (int i = 0; i < count; i++)
             {
                 int idx = Random.Range(0, 12);
@@ -286,4 +296,5 @@ public class MainClockControl : MonoBehaviour
             Debug.Log(line);
         }
     }
+    
 }
