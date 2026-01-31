@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2365282861527965285}
   - component: {fileID: 8480438366423392596}
   - component: {fileID: 6889910996557987310}
+  - component: {fileID: 8871445202793924706}
   m_Layer: 5
   m_Name: FocusPanel
   m_TagString: Untagged
@@ -105,6 +106,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animSpeed: 5
   lastOpenPosition: {x: 0, y: 0, z: 0}
+--- !u!114 &8871445202793924706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3802003954041122601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d34048261b9142ea912c8751fd662c7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  image: {fileID: 5957242977987057122}
 --- !u!1 &5861500155825022659
 GameObject:
   m_ObjectHideFlags: 0

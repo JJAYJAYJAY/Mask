@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class focusObject:BaseInteractable
+public class InteractObject:BaseInteractable
 {
     public enum Type
     {
