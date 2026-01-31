@@ -18,6 +18,7 @@ MonoBehaviour:
   type: 1
   weight: 4
   note: "\u8868\u76D8\u7684\u4E09\u79CD\u5361\u6263\u4F1A\u53D1\u51FA\u4E0D\u540C\u7684\u58F0\u97F3\u2026\u2026\u8BA9\u6BCF\u5C42\u7684\u5361\u6263\u90FD\u5BF9\u51C6\u5427"
+  MaskType: 0
   width: 250
   height: 250
-  description: 
+  description: "\u8FD9\u662F\u4EC0\u4E48\uFF1F"

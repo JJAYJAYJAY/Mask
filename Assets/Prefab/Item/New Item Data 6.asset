@@ -17,8 +17,8 @@ MonoBehaviour:
   icon: {fileID: 1714347234, guid: 5f513cae5042a3a48a3feb25ae249e7e, type: 3}
   type: 1
   weight: 2
-  note: "\u8868\u76D8\u7684\u4E09\u79CD\u5361\u6263\u4F1A\u53D1\u51FA\u4E0D\u540C\u7684\u58F0\u97F3\u2026\u2026\u8BA9\u6BCF\u5C42\u7684\u5361\u6263\u90FD\u5BF9\u51C6\u5427"
+  note: 
   MaskType: 0
   width: 150
   height: 150
-  description: 
+  description: "\u6211\u7684\u94A2\u7B14"
