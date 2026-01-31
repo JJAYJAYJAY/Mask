@@ -67,7 +67,7 @@ public class SudokuManager: MonoBehaviour
             password+=solution[item/9,item%9].ToString();
         }
 
-        GameManager.Instance.puzzlePasswords["SudokuPuzzle"] = password;
+        GameManager.Instance.puzzlePasswords[puzzleList.SudokuPuzzle] = password;
         lastFlag = GameManager.Instance.globalRuleData.SimplifySudoku;
         GameManager.Instance.globalRuleData.OnSimplifySudokuChanged += OnSimplifySudoku;
     }

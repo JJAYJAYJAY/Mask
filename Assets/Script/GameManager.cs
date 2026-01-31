@@ -3,12 +3,24 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
+public enum puzzleList
+{
+    ClockPuzzle1,
+    ClockPuzzle2,
+    SudokuPuzzle,
+    PatternPuzzle1,
+    PatternPuzzle2,
+    TimePuzzle1,
+    TimePuzzle2,
+    BalancePuzzle1,
+    BalancePuzzle2
+}
 public class GameManager : MonoBehaviour
 {
     // 单例实例
     public static GameManager Instance { get; private set; }
-    // 不同的谜题不同的密码用map存 //随机生成
-    public Dictionary<string, string> puzzlePasswords = new Dictionary<string, string>();
+    // 不同的谜题不同的密码用map存
+    public Dictionary<puzzleList, string> puzzlePasswords = new Dictionary<puzzleList, string>();
     // 全局buff规则
     public GlobalRuleData globalRuleData = new();
     // 随机选择器
@@ -61,7 +73,10 @@ public class GameManager : MonoBehaviour
     
     void GenerateAllPasswords()
     {
-
+        puzzlePasswords[puzzleList.PatternPuzzle1] = "4315";
+        puzzlePasswords[puzzleList.PatternPuzzle2] = "541327";
+        puzzlePasswords[puzzleList.TimePuzzle1] = "1502";
+        puzzlePasswords[puzzleList.TimePuzzle1] = "0251";
         // 打印出来方便调试（记得正式发布时删掉）
         foreach (var puzzle in puzzlePasswords)
         {

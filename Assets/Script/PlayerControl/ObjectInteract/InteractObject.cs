@@ -26,6 +26,13 @@ public class InteractObject:BaseInteractable
         {
             case Type.Focus:
                 focusPanel.image.sprite = focusIcon;
+                focusPanel.image.preserveAspect = true;
+
+                RectTransform rt = focusPanel.image.rectTransform;
+                rt.anchorMin = Vector2.zero;
+                rt.anchorMax = Vector2.one;
+                rt.offsetMin = Vector2.zero;
+                rt.offsetMax = Vector2.zero;
                 panel.OpenFromWorldPos(transform.position);
                 break;
             case Type.Description:

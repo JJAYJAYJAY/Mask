@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,13 +12,24 @@ public class LockManager : MonoBehaviour
     
     public Button breakButton;
     public Button tryButton;
+
+    public List<GameObject> relateGameobject;
+    public DetailPanelController choosePanel;
+    public DetailPanelController selfPanel;
+    
+    public puzzleList type;
     void Start()
     {
         GameManager.Instance.globalRuleData.OnShowCorrectDigitsChanged += OnshowCorrectDigitsChanged;
         GameManager.Instance.globalRuleData.OnCanBreakLocksChanged += OncanBreakLocksChanged;
+        //添加listener
+        
+        tryButton.onClick.AddListener(CheckPassword);
+        breakButton.onClick.AddListener(BreakLock);
     }
     public void CheckPassword()
     {
+        SetPassword(GameManager.Instance.puzzlePasswords[type]);
         int count = 0;
         bool flag = true;
         if (wheels.Length != correctPassword.Length)
@@ -40,7 +52,14 @@ public class LockManager : MonoBehaviour
 
     public void Onsuccess()
     {
-        
+        selfPanel.CloseToLast();
+        GlobalClockManager.Instance.Unlock(this);
+        foreach (var item in relateGameobject)
+        {
+            item.SetActive(false);
+        }
+        //屏幕中心打开
+        choosePanel.OpenFromWorldPos(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 10f)));
     }
     
     public void SetPassword(string password)
@@ -65,6 +84,18 @@ public class LockManager : MonoBehaviour
 
             correctPassword[i] = c - '0';
         }
+    }
+
+    void BreakLock()
+    {
+        selfPanel.CloseToLast();
+        GlobalClockManager.Instance.Unlock(this);
+        foreach (var item in relateGameobject)
+        {
+            item.SetActive(false);
+        }
+        
+        GameManager.Instance.globalRuleData.CanBreakLocks=false;
     }
 
     void OnshowCorrectDigitsChanged(bool flag)

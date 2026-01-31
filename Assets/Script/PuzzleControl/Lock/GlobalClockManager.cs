@@ -19,6 +19,12 @@ public class GlobalClockManager:MonoBehaviour
         Instance = this;
     }
 
+    public void Unlock(LockManager lockmanager)
+    {
+        unlockmanagers.Add(lockmanager);
+        lockmanagers.Remove(lockmanager);
+    }
+
     public void BreakRandomLock()
     {
         int index = Random.Range(0, lockmanagers.Count);

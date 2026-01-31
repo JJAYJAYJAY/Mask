@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class MainClockControl : MonoBehaviour
 {
+    public puzzleList type;
     //TODO 声音系统
     [Header("Audio")]
     public AudioSource rotateSound;
-    public AudioSource redMatchSound;
-    public AudioSource blueMatchSound;
-    public AudioSource yellowMatchSound;
     
     [Header("UI")]
     public GameObject numberPrefab;
@@ -177,7 +175,7 @@ public class MainClockControl : MonoBehaviour
         
         UpdateVisuals();
         Debug.Log($"谜题密码（仅供调试）: {password}");
-        GameManager.Instance.puzzlePasswords["ClockPuzzle"] = password;
+        GameManager.Instance.puzzlePasswords[type] = password;
     }
     
     void UpdateVisuals()

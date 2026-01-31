@@ -32,7 +32,6 @@ public class LockWheel : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void OnEndDrag(PointerEventData eventData)
     {
         SnapToNearest();
-        if(manager != null) manager.CheckPassword();
     }
     
     void SnapToNearest()
