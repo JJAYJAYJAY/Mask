@@ -17,7 +17,7 @@ public class HightlightControl: MonoBehaviour
 
     void OnHighlightKeyItemsChanged(bool flag)
     {
-        gameObject.SetActive(flag);
+        Highlight.SetActive(flag);
     }
 }
 
