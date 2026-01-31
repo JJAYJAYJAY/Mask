@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 public class DetailPanelController : MonoBehaviour
@@ -7,6 +8,9 @@ public class DetailPanelController : MonoBehaviour
 
     private CanvasGroup group;
     private Vector3 originScale;
+    public event Action OnClosed;
+    public event Action OnOpened;
+    private static DetailPanelController currentlyOpenPanel = null;
 
     void Awake()
     {
@@ -18,17 +22,21 @@ public class DetailPanelController : MonoBehaviour
 
     public void OpenFromWorldPos(Vector3 worldPos)
     {
-        if (!gameObject.activeSelf)
-            gameObject.SetActive(true);
-        
+        // 如果有别的 Panel 已经在开，直接忽略
+        if (currentlyOpenPanel != null && currentlyOpenPanel != this)
+        {
+            Debug.Log("Another detail panel is already open, ignoring.");
+            return;
+        }
+
+        // 设置当前正在打开的 Panel
+        currentlyOpenPanel = this;
         StopAllCoroutines();
         StartCoroutine(Open(worldPos));
     }
 
     public void CloseToWorldPos(Vector3 worldPos)
     {
-        if (!gameObject.activeSelf) return;
-
         StopAllCoroutines();
         StartCoroutine(Close(worldPos));
     }
@@ -56,6 +64,7 @@ public class DetailPanelController : MonoBehaviour
             yield return null;
         }
         SetVisible(true);
+        OnOpened?.Invoke();
     }
     
     IEnumerator Close(Vector3 worldPos)
@@ -94,9 +103,11 @@ public class DetailPanelController : MonoBehaviour
         // 5. 确保状态彻底归零并关闭
         transform.localScale = Vector3.zero;
         SetVisible(false);
-        
         GameState.IsInDetailView = false;
         GameManager.Instance.SetBlocker(false); // 关闭全屏遮罩，恢复交互
+        if (currentlyOpenPanel == this)
+            currentlyOpenPanel = null;
+        OnClosed?.Invoke();
     }
     public void SetVisible(bool visible)
     {
@@ -104,4 +115,5 @@ public class DetailPanelController : MonoBehaviour
         group.blocksRaycasts = visible;
         group.interactable = visible;
     }
+    
 }

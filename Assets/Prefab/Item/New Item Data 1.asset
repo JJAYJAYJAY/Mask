@@ -14,10 +14,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemID: 2
   itemName: "\u8D2A\u5A6A\u9762\u5177"
-  icon: {fileID: 1137659402, guid: b958817b75fe2dc4abb21b6991ea6c08, type: 3}
+  icon: {fileID: 131912865, guid: 5425089ef8f822741bc7f647c7fb6f11, type: 3}
   type: 0
   weight: 1
   note: 
   width: 350
   height: 350
-  description: 
+  description: "\u975E\u5E38\u6050\u6016\u6050\u6016\u6050\u6016"

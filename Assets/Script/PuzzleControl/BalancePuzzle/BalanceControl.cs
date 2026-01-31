@@ -25,9 +25,8 @@ public class BalanceControl : MonoBehaviour
     void CalculateTargetAngle()
     {
         float diff = rightWeight - leftWeight;
-
         // 权重差映射到角度
-        targetAngle = Mathf.Clamp(diff, -1f, 1f) * maxAngle;
+        targetAngle = -Mathf.Clamp(diff, -1f, 1f) * maxAngle;
     }
 
     void RotateBeam()
@@ -42,12 +41,12 @@ public class BalanceControl : MonoBehaviour
 
     public void SetLeftWeight(float value)
     {
-        leftWeight = Mathf.Max(0, value);
+        leftWeight = value;
     }
 
     public void SetRightWeight(float value)
     {
-        rightWeight = Mathf.Max(0, value);
+        rightWeight =  value;
     }
 
     public void AddLeftWeight(float value)

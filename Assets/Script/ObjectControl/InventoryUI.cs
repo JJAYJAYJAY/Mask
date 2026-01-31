@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using Random = UnityEngine.Random;
+
 public class InventoryUI : MonoBehaviour
 {
     public static InventoryUI Instance;
@@ -12,7 +15,13 @@ public class InventoryUI : MonoBehaviour
         Instance = this;
         detailPanel = GetComponent<DetailPanelController>();
     }
-    
+
+    private void Start()
+    {
+        detailPanel.OnOpened += Onopen;
+        detailPanel.OnClosed += OnClose;
+    }
+
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
@@ -23,16 +32,13 @@ public class InventoryUI : MonoBehaviour
 
     public void Toggle()
     {
-        Debug.Log(isOpen);
         if (!isOpen)
         {
             detailPanel.OpenFromWorldPos(Vector3.zero);
-            isOpen = true;
         }
         else
         {
             detailPanel.CloseToWorldPos(Vector3.zero);
-            isOpen = false;
         }
     }
 
@@ -67,5 +73,15 @@ public class InventoryUI : MonoBehaviour
         float y = Random.Range(r.yMin + 80, r.yMax - 80);
 
         return new Vector2(x, y);
+    }
+
+    void Onopen()
+    {
+        isOpen = true;
+    }
+    
+    void OnClose()
+    {
+        isOpen = false;
     }
 }
