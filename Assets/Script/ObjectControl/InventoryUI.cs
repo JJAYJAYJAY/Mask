@@ -9,6 +9,8 @@ public class InventoryUI : MonoBehaviour
     public RectTransform itemsRoot;
     public InventoryItemUI itemPrefab;
     bool isOpen = false;
+    public AudioClip OpenSound;
+    public AudioSource source;
     DetailPanelController detailPanel;
     void Awake()
     {
@@ -24,7 +26,7 @@ public class InventoryUI : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Tab))
+        if (Input.GetKeyDown(KeyCode.Tab)&&GameState.IsGameBegin)
         {
             Toggle();
         }
@@ -34,6 +36,7 @@ public class InventoryUI : MonoBehaviour
     {
         if (!isOpen)
         {
+            source.PlayOneShot(OpenSound);
             detailPanel.OpenFromWorldPos(Vector3.zero);
         }
         else

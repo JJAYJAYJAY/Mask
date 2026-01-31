@@ -9,6 +9,8 @@ public class GameStartController : MonoBehaviour
     public CanvasGroup gameUI;
     public CanvasGroup startUI;
 
+    public AudioClip bgmMusic;
+    public AudioSource audioSource;
     public void OnStartButtonClicked()
     {
         StartCoroutine(StartGameSequence());
@@ -32,6 +34,9 @@ public class GameStartController : MonoBehaviour
 
         // 4️⃣ 显示游戏 UI
         ShowGameUI();
+        GameState.IsGameBegin = true;
+        audioSource.PlayOneShot(bgmMusic);
+        audioSource.loop = true;
     
     }
 

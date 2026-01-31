@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -29,7 +30,14 @@ public class LockManager : MonoBehaviour
     }
     public void CheckPassword()
     {
+        if (!GameManager.Instance.puzzlePasswords.TryGetValue(type, out var value))
+            return;
         SetPassword(GameManager.Instance.puzzlePasswords[type]);
+        Debug.Log(GameManager.Instance.puzzlePasswords[type]);
+        // for (int i = 0; i < correctPassword.Length; i++)
+        // {
+        //     Debug.Log(correctPassword[i]);
+        // }
         int count = 0;
         bool flag = true;
         if (wheels.Length != correctPassword.Length)
@@ -37,7 +45,6 @@ public class LockManager : MonoBehaviour
 
         for (int i = 0; i < wheels.Length; i++)
         {
-            Debug.Log(wheels[i].gameObject.name+":"+ wheels[i].CurrentValue);
             if (wheels[i].CurrentValue == correctPassword[i]) count++;
             if (wheels[i].CurrentValue != correctPassword[i])
                 flag=false;
@@ -52,14 +59,30 @@ public class LockManager : MonoBehaviour
 
     public void Onsuccess()
     {
+        StartCoroutine(OnSuccessCoroutine());
+    }
+
+    private IEnumerator OnSuccessCoroutine()
+    {
+        // 1️⃣ 关闭当前面板
         selfPanel.CloseToLast();
+
+        // 2️⃣ 等待 0.5 秒（等待关闭动画）
+        yield return new WaitForSeconds(0.5f);
+
+        // 3️⃣ 解锁逻辑
         GlobalClockManager.Instance.Unlock(this);
+
+        // 4️⃣ 隐藏关联物体
         foreach (var item in relateGameobject)
         {
             item.SetActive(false);
         }
-        //屏幕中心打开
-        choosePanel.OpenFromWorldPos(Camera.main.ScreenToWorldPoint(new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 10f)));
+
+        // 5️⃣ 屏幕中心打开另一个面板
+        Vector3 screenCenter = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 10f);
+        Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenCenter);
+        choosePanel.OpenFromWorldPos(worldPos);
     }
     
     public void SetPassword(string password)
@@ -76,13 +99,14 @@ public class LockManager : MonoBehaviour
         {
             char c = password[i];
 
-            if (c < '1' || c > '9')
+            if (c < '0' || c > '9')
             {
                 Debug.LogError("Invalid password character: " + c);
                 return;
             }
 
             correctPassword[i] = c - '0';
+            Debug.Log(c.ToString());
         }
     }
 
