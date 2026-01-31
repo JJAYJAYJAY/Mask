@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -89,9 +90,22 @@ public class GameManager : MonoBehaviour
     {
         return database.GetItem(id);
     }
-    
+    Coroutine clearCoroutine;
     public void showText(string content)
     {
         text.text = content;
+
+        // 如果之前已经在倒计时，先停掉
+        if (clearCoroutine != null)
+            StopCoroutine(clearCoroutine);
+
+        clearCoroutine = StartCoroutine(ClearAfterDelay(3f));
+    }
+
+    IEnumerator ClearAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        text.text = "";
+        clearCoroutine = null;
     }
 }

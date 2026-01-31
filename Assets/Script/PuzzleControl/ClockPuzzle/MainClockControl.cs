@@ -18,9 +18,12 @@ public class MainClockControl : MonoBehaviour
     public float startAngleOffset = 90f;
     
     public GameObject colorMarkerPrefab;
+    // public GameObject targetMarkPrefab;
     public int[] targetPositions;
     
     public Sprite[] ColorSprites;
+    public Sprite GraySprite;
+    public Sprite[] TargetSprites;
     private bool[,] previousMatch;
     // ===================== 枚举定义 =====================
     public enum SlotColor
@@ -181,7 +184,7 @@ public class MainClockControl : MonoBehaviour
     void UpdateVisuals()
     {
         for (int i = 0; i < rings.Count; i++)
-        {;
+        {
             float ringRadius;
             switch (i)
             {
@@ -227,10 +230,72 @@ public class MainClockControl : MonoBehaviour
                 marker.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
                 marker.GetComponent<RectTransform>().localScale = new Vector3((4-i)*0.8f+1, (4-i)*0.8f+1, (4-i)*0.8f+1);
                 marker.GetComponent<UnityEngine.UI.Image>().sprite = GetUISprite(color);
+                if (type == puzzleList.PatternPuzzle2)
+                {
+                    // 50%概率变成灰色
+                    if (Random.value < 0.5f)
+                    {
+                        marker.GetComponent<UnityEngine.UI.Image>().sprite = GraySprite;
+                    }
+                }
             }
         }
-    }
+        
+        //我想在最外环目标颜色位置生成颜色标志注意标志要旋转
+        int outerRingIndex = 0;
+        var outerRing = rings[outerRingIndex];
 
+// 半径（比最外环 marker 稍微外一点）
+        float targetRadius = outerRing.ringTransform.rect.width / 2f * 0.9f;
+
+// 1️⃣ 清理旧目标标志
+        for (int c = outerRing.ringTransform.childCount - 1; c >= 0; c--)
+        {
+            Transform child = outerRing.ringTransform.GetChild(c);
+            if (child.name.StartsWith("TargetMarker_"))
+                Destroy(child.gameObject);
+        }
+
+// 2️⃣ 为每种目标颜色生成标志
+        foreach (SlotColor color in new[] { SlotColor.Red, SlotColor.Yellow, SlotColor.Blue })
+        {
+            int physPos = targetPositions[(int)color];
+
+            // 物理角度（不加 ring 的旋转）
+            float angle = startAngleOffset - physPos * 30f;
+            float radian = angle * Mathf.Deg2Rad;
+
+            float x = Mathf.Cos(radian) * targetRadius;
+            float y = Mathf.Sin(radian) * targetRadius;
+
+            GameObject marker = Instantiate(colorMarkerPrefab, outerRing.ringTransform);
+            marker.gameObject.transform.SetParent(outerRing.ringTransform.parent);
+            marker.transform.SetAsFirstSibling();
+            marker.name = $"TargetMarker_{color}";
+
+            RectTransform rt = marker.GetComponent<RectTransform>();
+            rt.anchoredPosition = new Vector2(x, y);
+            rt.localScale = Vector3.one * 5.5f;
+            // 3️⃣ 朝向圆心（关键）
+            Vector2 dirToCenter = -rt.anchoredPosition;
+            float rotZ = Mathf.Atan2(dirToCenter.y, dirToCenter.x) * Mathf.Rad2Deg + 90f;
+            rt.localRotation = Quaternion.Euler(0, 0, rotZ);
+           
+            // 4️⃣ 设置颜色
+            var img = marker.GetComponent<UnityEngine.UI.Image>();
+            img.sprite = GetTargetSprite(color);
+        }
+    }
+    Sprite GetTargetSprite(SlotColor color)
+    {
+        switch (color)
+        {
+            case SlotColor.Red: return TargetSprites[0];
+            case SlotColor.Yellow: return TargetSprites[1];
+            case SlotColor.Blue: return TargetSprites[2];
+            default: return null;
+        }
+    }
 
     Sprite GetUISprite(SlotColor color)
     {

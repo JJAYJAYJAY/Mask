@@ -9,7 +9,9 @@ public class BalanceControl : MonoBehaviour
     [Header("Rotation Settings")]
     public float maxAngle = 20f;   // 最大倾斜角度
     public float rotateSpeed = 5f; // 旋转平滑速度
-
+    
+    public BalanceSlot rightSlot;
+    public BalanceSlot leftSlot;
     [Header("Debug")]
     public float leftWeight;
     public float rightWeight;
@@ -58,9 +60,22 @@ public class BalanceControl : MonoBehaviour
     {
         rightWeight += value;
     }
-
+    
     public bool IsBalanced(float tolerance = 0.1f)
     {
         return Mathf.Abs(leftWeight - rightWeight) <= tolerance;
+    }
+    
+    //吞噬
+    public void OnCheckClick()
+    {
+        if (IsBalanced())
+        {
+            
+        }
+        else
+        {
+            GameManager.Instance.showText("天平还没平衡");
+        }
     }
 }
