@@ -8,7 +8,11 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     // 不同的谜题不同的密码用map存 //随机生成
     public Dictionary<string, string> puzzlePasswords = new Dictionary<string, string>();
+    // 全局buff规则
     public GlobalRuleData Data = new();
+    // 随机选择器
+    public RewardSelector rewardSelector;
+    public RewardRandomPool rewardRandomPool;
     
     [Header("UI References")]
     [SerializeField] private CanvasGroup globalBlocker; // 拖入带 CanvasGroup 的全屏遮罩
@@ -30,6 +34,8 @@ public class GameManager : MonoBehaviour
         
         // 生成所有谜题的随机密码
         GenerateAllPasswords();
+        
+        rewardRandomPool = new RewardRandomPool(database.allItems,BuffManager.Instance.allBuffs);
     }
 
     // 提供一个统一的接口来控制

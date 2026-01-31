@@ -4,11 +4,11 @@
 
     public override void Apply(GlobalRuleData data)
     {
-        data.breakMaskLimits = true;
+        data.BreakMaskLimits = true;
     }
 
     public override void Remove(GlobalRuleData data)
     {
-        data.breakMaskLimits = false;
+        data.BreakMaskLimits = false;
     }
 }

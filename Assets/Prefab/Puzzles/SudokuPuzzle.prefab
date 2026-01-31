@@ -258,7 +258,7 @@ MonoBehaviour:
   patternSprites:
   - {fileID: -1601229289, guid: 3325aecaa6eda7b42819c6e22da2e566, type: 3}
   - {fileID: -1965630627, guid: 3325aecaa6eda7b42819c6e22da2e566, type: 3}
-  emptyCount: 5
+  emptyCount: 30
   audioSource: {fileID: 3562030539927076741}
   cellPickupClip: {fileID: 8300000, guid: a45c32f3e518d9f4c9d2f588d1c8345d, type: 3}
   cellPlaceClip: {fileID: 8300000, guid: 85e689095728c3041b334b9ff5b7e3e6, type: 3}
@@ -267,6 +267,7 @@ MonoBehaviour:
   - {fileID: 8724505965661470668}
   - {fileID: 7704666416813873133}
   - {fileID: 89495882489080859}
+  detailPanelController: {fileID: 3501287995132532038}
 --- !u!1 &1909242353927509777
 GameObject:
   m_ObjectHideFlags: 0

@@ -26,12 +26,16 @@ public class SudokuManager: MonoBehaviour
     public AudioSource audioSource;
     public  AudioClip cellPickupClip;
     public  AudioClip cellPlaceClip;
+    
     [Header("UI References")]
     public Image[] answerSlots;
-    // public static SudokuManager Instance { get; private set; }
+    
+    [Header("Other Settings")]
+    public DetailPanelController detailPanelController;
+    
     private List<DetectCell> cells = new List<DetectCell>();
     private List<int> vitalPositions = new List<int>();
-
+    private bool lastFlag;
     private string password;
     
     // 0 表示空
@@ -51,12 +55,12 @@ public class SudokuManager: MonoBehaviour
 
     void Start()
     {
-        emptyCount=Math.Min(5,emptyCount);
+        emptyCount=Math.Max(5,emptyCount);
         SudokuGenerator sudokuGenerator = new SudokuGenerator();
         puzzle = sudokuGenerator.Generate(emptyCount); // 生成一个有40个空格的数独谜题
         solution = sudokuGenerator.GetSolution(); // 获取对应的解
-        printBoard();
         currentState = puzzle;
+        GenerateVitalPositons();
         GenerateBoard();
         foreach (var item in vitalPositions)
         {
@@ -64,6 +68,8 @@ public class SudokuManager: MonoBehaviour
         }
 
         GameManager.Instance.puzzlePasswords["SudokuPuzzle"] = password;
+        lastFlag = GameManager.Instance.Data.SimplifySudoku;
+        GameManager.Instance.Data.OnSimplifySudokuChanged += OnSimplifySudoku;
     }
     public List<int> GetRandomPositions(int count, List<int> candidates)
     {
@@ -80,7 +86,7 @@ public class SudokuManager: MonoBehaviour
         return results;
     }
 
-    void GenerateBoard()
+    void GenerateVitalPositons()
     {
         // 统计棋盘的空位置
         List<int> candidates = new List<int>();
@@ -95,6 +101,10 @@ public class SudokuManager: MonoBehaviour
         }
         //在vitalBoard上随机4个点坐标生成 Vitalcell
         vitalPositions = GetRandomPositions(4, candidates);
+    }
+
+    void GenerateBoard()
+    {
         // 创建81个空物体
         for (int i = 0; i < 81; i++)
         {
@@ -280,6 +290,85 @@ public class SudokuManager: MonoBehaviour
         if (audioSource != null && cellPlaceClip != null)
         {
             audioSource.PlayOneShot(cellPlaceClip);
+        }
+    }
+    
+    void OnSimplifySudoku(bool flag)
+    {
+        if (flag)
+        {
+            // 先统计可以填数字的位置（不能是vital cell，也必须是空格）
+            List<int> candidates = new List<int>();
+            for (int i = 0; i < 81; i++)
+            {
+                int row = i / 9;
+                int col = i % 9;
+                if (currentState[row, col] == 0 && !vitalPositions.Contains(i))
+                {
+                    candidates.Add(i);
+                }
+            }
+
+            // 随机选择最多10个位置填充
+            int fillCount = Math.Min(10, candidates.Count);
+            List<int> fillPositions = GetRandomPositions(fillCount, candidates);
+
+            foreach (var index in fillPositions)
+            {
+                int row = index / 9;
+                int col = index % 9;
+                currentState[row, col] = solution[row, col]; // 填入正确答案
+            }
+
+            // 清空旧的棋盘
+            foreach (Transform child in dataBoard.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            foreach (Transform child in vitalBoard.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            foreach (Transform child in pieceArea.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            foreach (Transform child in detectBoard.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            // 重新生成棋盘
+            GenerateBoard();
+        }
+        else
+        {
+            // 如果关闭简化模式，则可以重置棋盘回原来的 puzzle
+            currentState = (int[,])puzzle.Clone();
+
+            // 清空旧的棋盘
+            foreach (Transform child in dataBoard.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            foreach (Transform child in vitalBoard.transform)
+            {
+                Destroy(child.gameObject);
+            }
+            foreach(Transform child in pieceArea.transform)
+            {
+                Destroy(child.gameObject);
+            }
+
+            foreach (Transform child in detectBoard.transform)
+            {
+                Destroy(child.gameObject);
+            } 
+
+            // 重新生成棋盘
+            GenerateBoard();
         }
     }
 }

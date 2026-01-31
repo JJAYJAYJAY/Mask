@@ -15,6 +15,7 @@ public class ItemData : ScriptableObject
     public ItemType type;
     public float weight;
     public string note;
+    public Mask MaskType; 
     [Header("UI Size (px)")]
     public float width;
     public float height;

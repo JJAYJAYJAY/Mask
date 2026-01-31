@@ -1,14 +1,56 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BuffManager : MonoBehaviour
 {
     public static BuffManager Instance;
     private List<Buff> buffs = new();
+    public List<BuffMetadata> allBuffs;
+    public Dictionary<string, BuffMetadata> buffDict = new();
+
+    [Header("Debug UI")]
+    public Canvas debugCanvas; // 场景里挂一个 Canvas
+    public Button buttonTemplate; // 场景里挂一个 Button，作为模板
+    public float buttonSpacing = 30f;
 
     void Awake()
     {
         Instance = this;
+    }
+
+    private void Start()
+    {
+        foreach (BuffMetadata buff in allBuffs)
+        {
+            buffDict[buff.buffName] = buff;
+        }
+
+        SetupDebugPanel();
+    }
+
+    void SetupDebugPanel()
+    {
+        if (debugCanvas == null || buttonTemplate == null) return;
+
+        buttonTemplate.gameObject.SetActive(false); // 模板隐藏
+
+        for (int i = 0; i < allBuffs.Count; i++)
+        {
+            BuffMetadata meta = allBuffs[i];
+            Button btn = Instantiate(buttonTemplate, debugCanvas.transform);
+            btn.gameObject.SetActive(true);
+            btn.transform.localPosition = new Vector3(0, -i * buttonSpacing, 0);
+            btn.GetComponentInChildren<TextMeshProUGUI>().text = meta.buffName;
+
+            btn.onClick.AddListener(() =>
+            {
+                Buff newBuff = BuffFactory.Create(meta);
+                AddBuff(newBuff);
+                Debug.Log("Added Buff: " + meta.buffName);
+            });
+        }
     }
 
     public void AddBuff(Buff buff)
@@ -21,35 +63,5 @@ public class BuffManager : MonoBehaviour
     {
         buff.Remove(GameManager.Instance.Data);
         buffs.Remove(buff);
-    }
-
-    // void Debug()
-    // {
-    //     //加入所有buff
-    //     AddBuff(new CompositeStripesBuff());
-    //     AddBuff(new DeepScratchesBuff());
-    //     AddBuff(new FluorescentPaintBuff());
-    //     AddBuff(new GreedScarBuff());
-    //     AddBuff(new ObviousBuff());
-    //     AddBuff(new SimpleStyleBuff());
-    //     AddBuff(new SolidColorPendantBuff());
-    //     AddBuff(new StrengthCoatingBuff());
-    // }
-}
-
-public static class BuffFactory
-{
-    public static Buff Create(BuffMetadata meta)
-    {
-        switch (meta.name)
-        {
-            case "ReduceCost":
-                return new CompositeStripesBuff(meta);
-
-            // 以后继续加
-        }
-
-        Debug.LogError($"Unknown buff meta: {meta.name}");
-        return null;
     }
 }

@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LockManager : MonoBehaviour
 {
@@ -7,9 +8,13 @@ public class LockManager : MonoBehaviour
     public int[] correctPassword;
 
     public TextMeshProUGUI correctNumText;
-
+    
+    public Button breakButton;
+    public Button tryButton;
     void Start()
     {
+        GameManager.Instance.Data.OnShowCorrectDigitsChanged += OnshowCorrectDigitsChanged;
+        GameManager.Instance.Data.OnCanBreakLocksChanged += OncanBreakLocksChanged;
     }
     public void CheckPassword()
     {
@@ -61,5 +66,14 @@ public class LockManager : MonoBehaviour
             correctPassword[i] = c - '0';
         }
     }
+
+    void OnshowCorrectDigitsChanged(bool flag)
+    {
+        correctNumText.gameObject.SetActive(flag);
+    }
     
+    void OncanBreakLocksChanged(bool flag)
+    {
+        breakButton.gameObject.SetActive(flag);
+    }
 }

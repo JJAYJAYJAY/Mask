@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Game/ItemDatabase")]
 public class ItemDatabase : ScriptableObject
 {
-    public ItemData[] allItems; // 在 Inspector 拖入全部 ItemData
+    public List<ItemData> allItems; // 在 Inspector 拖入全部 ItemData
 
     private Dictionary<string, ItemData> itemDict;
 
