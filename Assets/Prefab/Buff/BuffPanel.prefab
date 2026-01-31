@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.23921569}
+  m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -136,6 +136,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 5760702456040140465, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 392
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760702456040140465, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 164
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760702456040140465, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -533
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866634120761248164, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866634120761248164, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 112293637, guid: 8be6f26e31ea68b469e5ac2d4e7f6b68,
+        type: 3}
     - target: {fileID: 6879467357585621250, guid: 4af7c591eb7a0e54189bc19c7838941e,
         type: 3}
       propertyPath: m_Pivot.x
@@ -287,6 +313,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card
       objectReference: {fileID: 0}
+    - target: {fileID: 5760702456040140465, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 392
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760702456040140465, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 164
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760702456040140465, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -533
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866634120761248164, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866634120761248164, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 112293637, guid: 8be6f26e31ea68b469e5ac2d4e7f6b68,
+        type: 3}
     - target: {fileID: 6879467357585621250, guid: 4af7c591eb7a0e54189bc19c7838941e,
         type: 3}
       propertyPath: m_Pivot.x
@@ -380,7 +432,7 @@ PrefabInstance:
     - target: {fileID: 6879467357585621250, guid: 4af7c591eb7a0e54189bc19c7838941e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: -506
+      value: -565
       objectReference: {fileID: 0}
     - target: {fileID: 6879467357585621250, guid: 4af7c591eb7a0e54189bc19c7838941e,
         type: 3}
@@ -438,6 +490,32 @@ PrefabInstance:
       propertyPath: m_Name
       value: Card (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5760702456040140465, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 392
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760702456040140465, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 164
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760702456040140465, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: -533
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866634120761248164, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_Type
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6866634120761248164, guid: 4af7c591eb7a0e54189bc19c7838941e,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 112293637, guid: 8be6f26e31ea68b469e5ac2d4e7f6b68,
+        type: 3}
     - target: {fileID: 6879467357585621250, guid: 4af7c591eb7a0e54189bc19c7838941e,
         type: 3}
       propertyPath: m_Pivot.x
@@ -531,7 +609,7 @@ PrefabInstance:
     - target: {fileID: 6879467357585621250, guid: 4af7c591eb7a0e54189bc19c7838941e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 468
+      value: 532
       objectReference: {fileID: 0}
     - target: {fileID: 6879467357585621250, guid: 4af7c591eb7a0e54189bc19c7838941e,
         type: 3}
