@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5914efaf0c96794eb36f8e28314a8b2, type: 3}
-  m_Name: New Item Data 4
+  m_Name: "CD\u673A"
   m_EditorClassIdentifier: 
-  itemID: 5
-  itemName: "\u795E\u79D8\u9762\u5177"
-  icon: {fileID: -1670397586, guid: a2b9824a73f92df4791f2573c2f44787, type: 3}
-  type: 0
-  weight: -3
+  itemID: 17
+  itemName: "CD\u673A"
+  icon: {fileID: -2099309591, guid: 9ee10bc1d8d955c4bae2729c7ac67344, type: 3}
+  type: 1
+  weight: 0
   note: 
-  MaskType: 4
-  width: 350
-  height: 350
-  description: "\u591C\u541E\u5403\u7740\u4EC0\u4E48\uFF0C\u591C\u6697\u793A\u7740\u4EC0\u4E48\uFF1F"
+  MaskType: 0
+  width: 150
+  height: 150
+  description: "\u7528\u4E0D\u4E86\u4E86"

@@ -10,11 +10,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c5914efaf0c96794eb36f8e28314a8b2, type: 3}
-  m_Name: New Item Data 9
+  m_Name: "\u96F6\u98DF"
   m_EditorClassIdentifier: 
-  itemID: 10
-  itemName: "\u4E00\u4E9B\u96F6\u98DF"
-  icon: {fileID: 2111343262, guid: f31e820178afa9a458c95b11bcd4fe52, type: 3}
+  itemID: 9
+  itemName: "\u96F6\u98DF"
+  icon: {fileID: -980814932, guid: f31e820178afa9a458c95b11bcd4fe52, type: 3}
   type: 1
   weight: 0
   note: 
