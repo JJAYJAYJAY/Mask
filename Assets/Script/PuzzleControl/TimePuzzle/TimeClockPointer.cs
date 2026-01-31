@@ -17,6 +17,7 @@ public class TimeClockPointer : MonoBehaviour, IDragHandler, IBeginDragHandler
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        centerScreenPos = RectTransformUtility.WorldToScreenPoint(null, clockCenter.position);
         UpdatePointer(eventData);
     }
 
