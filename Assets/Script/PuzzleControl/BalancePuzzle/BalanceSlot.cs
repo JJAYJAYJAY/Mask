@@ -31,6 +31,11 @@ public class BalanceSlot : MonoBehaviour, IDropHandler
                 balance.AddLeftWeight(item.data.weight);
             else
                 balance.AddRightWeight(item.data.weight);
+            BalanceSlot balanceSlot = item.GetOriginalParent().GetComponent<BalanceSlot>();
+            if (balanceSlot != null)
+            {
+                removeItem(balanceSlot.side, item.data.weight);
+            }
         }
     }
     

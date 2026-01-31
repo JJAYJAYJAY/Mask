@@ -754,6 +754,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animSpeed: 5
+  lastOpenPosition: {x: 0, y: 0, z: 0}
 --- !u!1 &5431014777750335179
 GameObject:
   m_ObjectHideFlags: 0
@@ -1429,6 +1430,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.r
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7122490559738144745, guid: a10f5bc766d0eff46a7e862026970d50,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3501287995132532038}
+    - target: {fileID: 7122490559738144745, guid: a10f5bc766d0eff46a7e862026970d50,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseToLast
+      objectReference: {fileID: 0}
+    - target: {fileID: 7122490559738144745, guid: a10f5bc766d0eff46a7e862026970d50,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DetailPanelController, Assembly-CSharp
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

@@ -5,7 +5,7 @@ using UnityEngine;
 public class DetailPanelController : MonoBehaviour
 {
     public float animSpeed = 5f;
-
+    public Vector3 lastOpenPosition;
     private CanvasGroup group;
     private Vector3 originScale;
     public event Action OnClosed;
@@ -41,9 +41,9 @@ public class DetailPanelController : MonoBehaviour
         StartCoroutine(Open(worldPos));
     }
     
-    public void CloseToDefault()
+    public void CloseToLast()
     {
-        CloseToWorldPos(Vector3.zero); // 或者你需要的默认位置
+        CloseToWorldPos(lastOpenPosition); // 或者你需要的默认位置
     }
     public void CloseToWorldPos(Vector3 worldPos=default)
     {
@@ -53,6 +53,7 @@ public class DetailPanelController : MonoBehaviour
 
     IEnumerator Open(Vector3 worldPos)
     {
+        lastOpenPosition=worldPos;
         BeforeOpened?.Invoke();
         GameState.IsInDetailView = true;
         GameManager.Instance.SetBlocker(true);

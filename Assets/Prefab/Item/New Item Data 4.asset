@@ -18,6 +18,7 @@ MonoBehaviour:
   type: 0
   weight: -3
   note: 
+  MaskType: 4
   width: 350
   height: 350
   description: 
