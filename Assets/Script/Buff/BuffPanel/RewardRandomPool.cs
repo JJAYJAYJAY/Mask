@@ -1,12 +1,18 @@
 ﻿using System.Collections.Generic;
+using UnityEngine;
 
+/// <summary>
+/// 奖励池管理（面具 + Buff）
+/// </summary>
 public class RewardRandomPool
 {
-    List<ItemData> allObjects;
-    List<BuffMetadata> allBuffs;
+    // ===== 全局数据 =====
+    private List<ItemData> allObjects;
+    private List<BuffMetadata> allBuffs;
 
-    List<ItemData> maskPool = new();
-    List<BuffMetadata> buffPool = new();
+    // ===== 当前可选池 =====
+    private List<ItemData> maskPool = new();
+    private List<BuffMetadata> buffPool = new();
 
     public RewardRandomPool(List<ItemData> objects, List<BuffMetadata> buffs)
     {
@@ -15,7 +21,7 @@ public class RewardRandomPool
         RebuildPools();
     }
 
-    // ===== 对外接口（你第 3 条）=====
+    // ===== 对外接口：重建池 =====
     public void RebuildPools()
     {
         RebuildMaskPool();
@@ -23,13 +29,12 @@ public class RewardRandomPool
     }
 
     // ===== 面具池 =====
-    void RebuildMaskPool()
+    private void RebuildMaskPool()
     {
         maskPool.Clear();
         foreach (var obj in allObjects)
         {
-            if (obj.type == ItemType.Mask &&
-                !Inventory.Instance.HasItem(obj))
+            if (obj.type == ItemType.Mask && !Inventory.Instance.HasItem(obj))
             {
                 maskPool.Add(obj);
             }
@@ -38,39 +43,67 @@ public class RewardRandomPool
 
     public bool HasMask() => maskPool.Count > 0;
 
+    /// <summary>
+    /// 随机返回一个面具（不修改池）
+    /// </summary>
     public ItemData RandomMask()
     {
         if (maskPool.Count == 0) return null;
-        return maskPool[UnityEngine.Random.Range(0, maskPool.Count)];
-    }
-
-    // 当获得面具时由外部调用
-    public void OnMaskAcquired(ItemData mask)
-    {
-        Inventory.Instance.AddItem(mask);
-        RebuildPools();
+        return maskPool[Random.Range(0, maskPool.Count)];
     }
 
     // ===== Buff 池 =====
-    void RebuildBuffPool()
+    private void RebuildBuffPool()
     {
         buffPool.Clear();
         foreach (var buff in allBuffs)
         {
             // belong = 面具物品 id
             var maskMeta = allObjects.Find(o => o.MaskType == buff.belong);
-            if (maskMeta != null && Inventory.Instance.HasItem(maskMeta))
+            if (maskMeta != null && Inventory.Instance.HasItem(maskMeta) && !BuffManager.Instance.HasBuff(buff))
             {
                 buffPool.Add(buff);
             }
         }
     }
 
-    public bool HasBuff() => buffPool.Count > 0;
+    public bool HasBuff(int count) => buffPool.Count > count;
 
+    /// <summary>
+    /// 单次随机 Buff（可能重复）
+    /// </summary>
     public BuffMetadata RandomBuff()
     {
         if (buffPool.Count == 0) return null;
-        return buffPool[UnityEngine.Random.Range(0, buffPool.Count)];
+        return buffPool[Random.Range(0, buffPool.Count)];
+    }
+
+    /// <summary>
+    /// 一次性获取 N 个 Buff，保证不重复
+    /// </summary>
+    public List<BuffMetadata> RandomBuffs(int count)
+    {
+        var tempPool = new List<BuffMetadata>(buffPool); // 临时池
+        var result = new List<BuffMetadata>();
+
+        count = Mathf.Min(count, tempPool.Count); // 避免数量过多
+        for (int i = 0; i < count; i++)
+        {
+            int index = Random.Range(0, tempPool.Count);
+            result.Add(tempPool[index]);
+            tempPool.RemoveAt(index); // 无放回
+        }
+
+        return result;
+    }
+    
+    //打印buffpool
+    public void PrintBuffPool()
+    {
+        Debug.Log("Current Buff Pool:");
+        foreach (var buff in buffPool)
+        {
+            Debug.Log(buff.buffName);
+        }
     }
 }

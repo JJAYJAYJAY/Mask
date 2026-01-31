@@ -18,6 +18,7 @@ MonoBehaviour:
   type: 0
   weight: 2
   note: 
+  MaskType: 2
   width: 350
   height: 350
   description: "\u975E\u5E38\u6050\u6016\u6050\u6016"

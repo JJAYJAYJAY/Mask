@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class BuffManager : MonoBehaviour
 {
     public static BuffManager Instance;
-    private List<Buff> buffs = new();
+    private List<BuffMetadata> buffs = new();
     public List<BuffMetadata> allBuffs;
     public Dictionary<string, BuffMetadata> buffDict = new();
 
@@ -56,12 +56,17 @@ public class BuffManager : MonoBehaviour
     public void AddBuff(Buff buff)
     {
         buff.Apply(GameManager.Instance.Data);
-        buffs.Add(buff);
+        buffs.Add(buff.Meta);
     }
 
     public void RemoveBuff(Buff buff)
     {
         buff.Remove(GameManager.Instance.Data);
-        buffs.Remove(buff);
+        buffs.Remove(buff.Meta);
+    }
+    
+    public bool HasBuff(BuffMetadata meta)
+    {
+        return buffs.Contains(meta);
     }
 }

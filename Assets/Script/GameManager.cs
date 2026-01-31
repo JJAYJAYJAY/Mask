@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -35,7 +36,12 @@ public class GameManager : MonoBehaviour
         // 生成所有谜题的随机密码
         GenerateAllPasswords();
         
+    }
+
+    private void Start()
+    {
         rewardRandomPool = new RewardRandomPool(database.allItems,BuffManager.Instance.allBuffs);
+        rewardSelector = new RewardSelector(rewardRandomPool);
     }
 
     // 提供一个统一的接口来控制

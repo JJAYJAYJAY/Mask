@@ -10,8 +10,9 @@ public class DetailPanelController : MonoBehaviour
     private Vector3 originScale;
     public event Action OnClosed;
     public event Action OnOpened;
+    public event Action BeforeOpened;
     private static DetailPanelController currentlyOpenPanel = null;
-
+    
     void Awake()
     {
         group = GetComponent<CanvasGroup>();
@@ -19,8 +20,13 @@ public class DetailPanelController : MonoBehaviour
         transform.localScale = Vector3.zero;
         SetVisible(false);
     }
+    
+    public void OpenToDefault()
+    {
+        OpenFromWorldPos(Vector3.zero); // 或者你需要的默认位置
+    }
 
-    public void OpenFromWorldPos(Vector3 worldPos)
+    public void OpenFromWorldPos(Vector3 worldPos=default)
     {
         // 如果有别的 Panel 已经在开，直接忽略
         if (currentlyOpenPanel != null && currentlyOpenPanel != this)
@@ -34,8 +40,12 @@ public class DetailPanelController : MonoBehaviour
         StopAllCoroutines();
         StartCoroutine(Open(worldPos));
     }
-
-    public void CloseToWorldPos(Vector3 worldPos)
+    
+    public void CloseToDefault()
+    {
+        CloseToWorldPos(Vector3.zero); // 或者你需要的默认位置
+    }
+    public void CloseToWorldPos(Vector3 worldPos=default)
     {
         StopAllCoroutines();
         StartCoroutine(Close(worldPos));
@@ -43,6 +53,7 @@ public class DetailPanelController : MonoBehaviour
 
     IEnumerator Open(Vector3 worldPos)
     {
+        BeforeOpened?.Invoke();
         GameState.IsInDetailView = true;
         GameManager.Instance.SetBlocker(true);
 
