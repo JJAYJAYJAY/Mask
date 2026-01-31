@@ -8,6 +8,7 @@ public class HightlightControl: MonoBehaviour
     private void Awake()
     {
         Highlight = GameObject.Find("Highlight");
+        Highlight.SetActive(false);
     }
 
     void Start()
