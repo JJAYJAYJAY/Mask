@@ -17,8 +17,8 @@ public class GlitchTextWriter : MonoBehaviour
     public int glitchTailLength = 1;  // 尾巴乱码长度（1~2最舒服）
 
     [Header("Data")]
-    public StoryData[] storyDatas;
-    public Dictionary<Mask,StoryData> storyDict;
+    public MskStoryData[] storyDatas;
+    public Dictionary<Mask,MskStoryData> storyDict=new();
     private const string glitchChars = "@#$%&*+=-?/\\!";
     private Coroutine playCoroutine;
 
@@ -36,6 +36,7 @@ public class GlitchTextWriter : MonoBehaviour
     {
         foreach (var storyData in storyDatas)
         {
+            Debug.Log(storyData.mask);
             storyDict.Add(storyData.mask, storyData);
         }
         gameObject.SetActive(false);

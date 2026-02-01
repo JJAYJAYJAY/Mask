@@ -130,7 +130,7 @@ public class GameManager : MonoBehaviour
         Inventory.Instance.AddItem(item);
         GlitchTextWriter.Instance.PlayMaskStory(item.MaskType);
         rewardRandomPool.RebuildPools();
-        ScreenFader.Instance.FadeIn(0.1f);
+        yield return ScreenFader.Instance.FadeIn(0.1f);
     }
 
 }

@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 [CreateAssetMenu(
-    fileName = "StoryData",
-    menuName = "Game/Story Data"
+    fileName = "MaskStoryData",
+    menuName = "Game/Mask Story Data"
 )]
-public class StoryData: ScriptableObject
+public class MskStoryData: ScriptableObject
 {
     public Mask mask;
     [TextArea(5, 20)]
