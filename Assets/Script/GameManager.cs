@@ -134,5 +134,16 @@ public class GameManager : MonoBehaviour
         rewardRandomPool.RebuildPools();
         yield return ScreenFader.Instance.FadeIn(0.1f);
     }
+    
+    //退出游戏
+    public void QuitGame()
+    {
+        Debug.Log("退出游戏");
 
+        #if UNITY_EDITOR
+                UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
+    }
 }
