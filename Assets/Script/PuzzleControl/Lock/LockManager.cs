@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,7 +13,9 @@ public class LockManager : MonoBehaviour
 
     public TextMeshProUGUI correctNumText;
     public TextMeshProUGUI DescribeText;
+    public TextMeshProUGUI TipsText;
     public string description;
+    public string tips;
     public Button breakButton;
     public Button tryButton;
 
@@ -36,11 +39,13 @@ public class LockManager : MonoBehaviour
     {
         GameManager.Instance.globalRuleData.OnShowCorrectDigitsChanged += OnshowCorrectDigitsChanged;
         GameManager.Instance.globalRuleData.OnCanBreakLocksChanged += OncanBreakLocksChanged;
+        GameManager.Instance.globalRuleData.OnShowHintTextChanged += OnShowHintTextChanged;
         //添加listener
         
         tryButton.onClick.AddListener(CheckPassword);
         breakButton.onClick.AddListener(BreakLock);
         DescribeText.text = description;
+        TipsText.text = tips;
     }
     public void CheckPassword()
     {
@@ -144,5 +149,10 @@ public class LockManager : MonoBehaviour
     void OncanBreakLocksChanged(bool flag)
     {
         breakButton.gameObject.SetActive(flag);
+    }
+
+    void OnShowHintTextChanged(bool flag)
+    {
+        TipsText.gameObject.SetActive(flag);
     }
 }

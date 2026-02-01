@@ -30,14 +30,13 @@ public class GlobalClockManager:MonoBehaviour
         }
 
         Instance = this;
-        unlockmanagers = new List<LockManager>();
-        lockmanagers = new List<LockManager>();
     }
 
     public void Unlock(LockManager lockmanager)
     {
         unlockmanagers.Add(lockmanager);
         lockmanagers.Remove(lockmanager);
+        Debug.Log(lockmanagers.Count);
         CheckEnd();
     }
 
@@ -49,17 +48,18 @@ public class GlobalClockManager:MonoBehaviour
         unlockmanagers.Add(lockmanagers[index]);
         lockmanagers.RemoveAt(index);
     }
-    public void playEndStroy(int index){
-        StartCoroutine(EndStroySequence(index));
+    public void playEndStroy(int index, GameObject end){
+        StartCoroutine(EndStroySequence(index,end));
     }
-    private IEnumerator EndStroySequence(int index)
+    private IEnumerator EndStroySequence(int index,GameObject end)
     {
         // 1️⃣ 渐黑（等待播放完）
-        yield return ScreenFader.Instance.FadeOut(0.5f);
+        yield return ScreenFader.Instance.FadeOut(1f);
 
         // 2️⃣ 后续逻辑
         GlitchTextWriter.Instance.playEndStory(index);
         yield return ScreenFader.Instance.FadeIn(0.1f);
+        end.SetActive(true);
     }
 
     public void CheckEnd()
@@ -83,22 +83,19 @@ public class GlobalClockManager:MonoBehaviour
             if (itemDatas.Count == 0)
             {
                 audioSource.PlayOneShot(SoulEndBgm);
-                playEndStroy(2);
-                SoulEnd.SetActive(true);
+                playEndStroy(2,SoulEnd);
                 return;
             }
             if (itemDatas.Count == 1)
             {
                 audioSource.PlayOneShot(SoulEndBgm);
-                playEndStroy(1);
-                NormalEnd.SetActive(true);
+                playEndStroy(1,NormalEnd);
                 return;
             }
             if (itemDatas.Count < 5)
             {
                 audioSource.PlayOneShot(ChaosEndBgm);
-                playEndStroy(3);
-                ChaosEnd.SetActive(true);
+                playEndStroy(3,ChaosEnd);
                 return;
             }
 
@@ -107,13 +104,11 @@ public class GlobalClockManager:MonoBehaviour
                 if (GameManager.Instance.globalRuleData.SpecialEnd)
                 {
                     audioSource.PlayOneShot(SpeakEndBgm);
-                    playEndStroy(5);
-                    SpeakEnd.SetActive(true);
+                    playEndStroy(5,SpeakEnd);
                     return;
                 }
                 audioSource.PlayOneShot(CompleteEndBgm);
-                playEndStroy(4);
-                CompleteEnd.SetActive(true);
+                playEndStroy(4,CompleteEnd);
             }
         }
     }

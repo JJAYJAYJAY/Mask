@@ -82,7 +82,6 @@ public class GlitchTextWriter : MonoBehaviour
     {
         int targetLength = fullText.Length;
         int currentLength = 0;
-
         StringBuilder builder = new StringBuilder(targetLength);
 
         textUI.text = "";

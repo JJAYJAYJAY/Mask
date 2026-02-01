@@ -6,6 +6,7 @@ public class ChosePanel:MonoBehaviour
     [Header("UI")]
     public RewardCard[] cards;   // 长度 = 3
 
+    public GameObject flushButton;
     RewardSelector selector;
     
     public DetailPanelController detailPanelController;
@@ -23,8 +24,8 @@ public class ChosePanel:MonoBehaviour
     
     void OnOpen()
     {
-        Debug.Log("OnOpen");
         if(selector == null) selector = GameManager.Instance.rewardSelector;
+        if(GameManager.Instance.globalRuleData.CanFlash) flushButton.SetActive(true);
         var options = selector.Generate();
         // foreach (var option in options)
         // {
@@ -50,6 +51,32 @@ public class ChosePanel:MonoBehaviour
         }
     }
     
+    /// <summary>
+    /// 刷新奖励选项（核心）
+    /// </summary>
+    public void Refresh()
+    {
+        var options = selector.Generate();
+        for (int i = 0; i < cards.Length; i++)
+        {
+            var option = options[i];
+            cards[i].gameObject.SetActive(true);
+
+            cards[i].SetData(
+                GetName(option),
+                GetIcon(option),
+                () =>
+                {
+                    option.OnSelect?.Invoke();
+                    detailPanelController.CloseToWorldPos(Vector3.zero);
+                },
+                GetDescription(option),
+                option.type
+                
+            );
+        }
+        flushButton.SetActive(false);
+    }
 
     Sprite GetIcon(RewardOption option)
     {
@@ -83,4 +110,5 @@ public class ChosePanel:MonoBehaviour
             _ => "未知"
         };
     }
+    
 }
