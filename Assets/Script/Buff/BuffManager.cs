@@ -6,9 +6,9 @@ using UnityEngine.UI;
 public class BuffManager : MonoBehaviour
 {
     public static BuffManager Instance;
-    private List<BuffMetadata> buffs = new();
+    private List<BuffMetadata> buffs;
     public List<BuffMetadata> allBuffs;
-    public Dictionary<string, BuffMetadata> buffDict = new();
+    public Dictionary<string, BuffMetadata> buffDict;
 
     [Header("Debug UI")]
     public Canvas debugCanvas; // 场景里挂一个 Canvas
@@ -18,6 +18,9 @@ public class BuffManager : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        Debug.Log("BuffManager Awake");
+        buffs=new List<BuffMetadata>();
+        buffDict = new Dictionary<string, BuffMetadata>();
     }
 
     private void Start()

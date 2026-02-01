@@ -21,7 +21,7 @@ public class GlitchTextWriter : MonoBehaviour
     public MaskStoryData[] MaskstoryDatas;
 
     public StroyData[] StoryDatas;
-    public Dictionary<Mask,MaskStoryData> storyDict=new();
+    public Dictionary<Mask,MaskStoryData> storyDict;
     private const string glitchChars = "@#$%&*+=-?/\\!";
     private Coroutine playCoroutine;
 
@@ -33,6 +33,7 @@ public class GlitchTextWriter : MonoBehaviour
             return;
         }
         Instance = this;
+        storyDict = new Dictionary<Mask, MaskStoryData>();
     }
 
     private void Start()

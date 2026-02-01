@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -20,6 +21,17 @@ public class LockManager : MonoBehaviour
     public DetailPanelController selfPanel;
     
     public puzzleList type;
+    private Camera mainCamera;
+    private void Awake()
+    {
+        mainCamera = Camera.main;
+
+        if (mainCamera == null)
+        {
+            Debug.LogError("MainCamera not found!");
+        }
+    }
+
     void Start()
     {
         GameManager.Instance.globalRuleData.OnShowCorrectDigitsChanged += OnshowCorrectDigitsChanged;
@@ -83,7 +95,7 @@ public class LockManager : MonoBehaviour
 
         // 5️⃣ 屏幕中心打开另一个面板
         Vector3 screenCenter = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 10f);
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(screenCenter);
+        Vector3 worldPos = mainCamera.ScreenToWorldPoint(screenCenter);
         choosePanel.OpenFromWorldPos(worldPos);
     }
     

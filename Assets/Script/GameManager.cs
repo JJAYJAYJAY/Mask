@@ -21,10 +21,10 @@ public class GameManager : MonoBehaviour
     // 单例实例
     public static GameManager Instance { get; private set; }
     // 不同的谜题不同的密码用map存
-    public Dictionary<puzzleList, string> puzzlePasswords = new Dictionary<puzzleList, string>();
+    public Dictionary<puzzleList, string> puzzlePasswords;
     public DetailPanelController buffInit;
     // 全局buff规则
-    public GlobalRuleData globalRuleData = new();
+    public GlobalRuleData globalRuleData;
     // 随机选择器
     public RewardSelector rewardSelector;
     public RewardRandomPool rewardRandomPool;
@@ -51,8 +51,11 @@ public class GameManager : MonoBehaviour
         SetBlocker(false);
         
         // 生成所有谜题的随机密码
-        GenerateAllPasswords();
         
+        puzzlePasswords = new Dictionary<puzzleList, string>();
+        globalRuleData=new GlobalRuleData();
+        Debug.Log("GameManager Awake");
+        GenerateAllPasswords();
     }
 
     private void Start()

@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class TimePuzzleManager : MonoBehaviour
 {
-    [Range(0, 23)] public int hour = 0;
-    [Range(0, 59)] public int minute = 0;
+    [Range(0, 23)] public int hour;
+    [Range(0, 59)] public int minute;
 
     // 时间变化事件
     public event Action<int, int> OnTimeChanged;

@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GlobalClockManager:MonoBehaviour
 {
-    public List<LockManager> unlockmanagers =  new List<LockManager>();
-    public List<LockManager> lockmanagers =  new List<LockManager>();
+    public List<LockManager> unlockmanagers;
+    public List<LockManager> lockmanagers;
     
     public GameObject SpeakEnd;
     public GameObject ChaosEnd;
@@ -30,6 +30,8 @@ public class GlobalClockManager:MonoBehaviour
         }
 
         Instance = this;
+        unlockmanagers = new List<LockManager>();
+        lockmanagers = new List<LockManager>();
     }
 
     public void Unlock(LockManager lockmanager)

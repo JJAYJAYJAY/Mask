@@ -9,16 +9,27 @@ public class ChosePanel:MonoBehaviour
     RewardSelector selector;
     
     public DetailPanelController detailPanelController;
+
+    private void Awake()
+    {
+        Debug.Log("ChosePanel Awake");
+    }
+
     private void Start()
     {
         detailPanelController.BeforeOpened += OnOpen;
-        selector = GameManager.Instance.rewardSelector;
+        Debug.Log("ChosePanel Get Selector");
     }
     
     void OnOpen()
     {
+        Debug.Log("OnOpen");
         if(selector == null) selector = GameManager.Instance.rewardSelector;
         var options = selector.Generate();
+        // foreach (var option in options)
+        // {
+        //     Debug.Log(option.item.itemName);
+        // }
         for (int i = 0; i < cards.Length; i++)
         {
             var option = options[i];

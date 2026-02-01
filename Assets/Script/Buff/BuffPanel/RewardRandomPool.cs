@@ -11,14 +11,17 @@ public class RewardRandomPool
     private List<BuffMetadata> allBuffs;
 
     // ===== 当前可选池 =====
-    private List<ItemData> maskPool = new();
-    private List<BuffMetadata> buffPool = new();
+    private List<ItemData> maskPool;
+    private List<BuffMetadata> buffPool;
 
     public RewardRandomPool(List<ItemData> objects, List<BuffMetadata> buffs)
     {
         allObjects = objects;
         allBuffs = buffs;
+        maskPool = new List<ItemData>();
+        buffPool = new List<BuffMetadata>();
         RebuildPools();
+        
     }
 
     // ===== 对外接口：重建池 =====

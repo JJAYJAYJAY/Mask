@@ -12,10 +12,16 @@ public class DetailPanelController : MonoBehaviour
     public event Action OnOpened;
     public event Action BeforeOpened;
     private static DetailPanelController currentlyOpenPanel = null;
-    
+    private Camera mainCamera;
     void Awake()
     {
         group = GetComponent<CanvasGroup>();
+        mainCamera = Camera.main;
+
+        if (mainCamera == null)
+        {
+            Debug.LogError("MainCamera not found!");
+        }
         originScale = transform.localScale;
         transform.localScale = Vector3.zero;
         SetVisible(false);
@@ -58,7 +64,7 @@ public class DetailPanelController : MonoBehaviour
         GameState.IsInDetailView = true;
         GameManager.Instance.SetBlocker(true);
 
-        Vector3 start = Camera.main.WorldToScreenPoint(worldPos);
+        Vector3 start = mainCamera.WorldToScreenPoint(worldPos);
         Vector3 center = new(Screen.width / 2f, Screen.height / 2f, 0f);
 
         transform.position = start;

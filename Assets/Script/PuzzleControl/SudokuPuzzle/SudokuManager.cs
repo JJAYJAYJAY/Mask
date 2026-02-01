@@ -33,8 +33,8 @@ public class SudokuManager: MonoBehaviour
     [Header("Other Settings")]
     public DetailPanelController detailPanelController;
     
-    private List<DetectCell> cells = new List<DetectCell>();
-    private List<int> vitalPositions = new List<int>();
+    private List<DetectCell> cells;
+    private List<int> vitalPositions;
     private bool lastFlag;
     private string password;
     
@@ -45,12 +45,8 @@ public class SudokuManager: MonoBehaviour
     private int[,] currentState; 
     private void Awake()
     {
-        // if (Instance != null && Instance != this)
-        // {
-        //     Destroy(gameObject);
-        //     return;
-        // }
-        // Instance = this;
+        cells = new List<DetectCell>();
+        vitalPositions = new List<int>();
     }
 
     void Start()
