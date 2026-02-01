@@ -65,8 +65,7 @@ public class RewardSelector
         option.OnSelect = () =>
         {
             if (option.item == null) return;
-            Inventory.Instance.AddItem(option.item);
-            pool.RebuildPools();
+            GameManager.Instance.selectMask(option);
         };
         return option;
     }

@@ -10,7 +10,8 @@ public class LockManager : MonoBehaviour
     public int[] correctPassword;
 
     public TextMeshProUGUI correctNumText;
-    
+    public TextMeshProUGUI DescribeText;
+    public string description;
     public Button breakButton;
     public Button tryButton;
 
@@ -27,6 +28,7 @@ public class LockManager : MonoBehaviour
         
         tryButton.onClick.AddListener(CheckPassword);
         breakButton.onClick.AddListener(BreakLock);
+        DescribeText.text = description;
     }
     public void CheckPassword()
     {

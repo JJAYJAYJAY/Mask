@@ -38,7 +38,7 @@ public class InteractObject:BaseInteractable
                 panel.OpenFromWorldPos(transform.position);
                 break;
             case Type.Description:
-                GameManager.Instance.showText(data.description);
+                if(data) GameManager.Instance.showText(data.description);
                 break;
             case Type.ShowOther:
                 this.otherObject.SetActive(true);

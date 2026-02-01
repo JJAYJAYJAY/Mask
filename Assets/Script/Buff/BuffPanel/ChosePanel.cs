@@ -19,7 +19,6 @@ public class ChosePanel:MonoBehaviour
     {
         if(selector == null) selector = GameManager.Instance.rewardSelector;
         var options = selector.Generate();
-        Debug.Log(options.Count);
         for (int i = 0; i < cards.Length; i++)
         {
             var option = options[i];

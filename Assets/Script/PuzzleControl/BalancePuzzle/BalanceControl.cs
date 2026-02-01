@@ -1,6 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 public class BalanceControl : MonoBehaviour
 {
@@ -24,9 +26,11 @@ public class BalanceControl : MonoBehaviour
     public CanvasGroup textCanvasGroup;
 
     public ItemData mustItem;
+    public TextMeshProUGUI text;
     private float targetAngle;
     private bool isConsuming; // 防止重复触发
-
+    private string password;
+    
     void Update()
     {
         CalculateTargetAngle();
@@ -83,6 +87,10 @@ public class BalanceControl : MonoBehaviour
             if (IsMust())
             {
                 StartCoroutine(ConsumeRoutine());
+            }
+            else
+            {
+                GameManager.Instance.showText("好像少了某种东西");
             }
         }
         else
@@ -199,4 +207,26 @@ public class BalanceControl : MonoBehaviour
     public void SetRightWeight(float value) => rightWeight = value;
     public void AddLeftWeight(float value) => leftWeight += value;
     public void AddRightWeight(float value) => rightWeight += value;
+
+    private void Start()
+    {
+        RandomPassword();
+        text.text=password;
+        GameManager.Instance.puzzlePasswords[puzzleList.BalancePuzzle1] = password;
+    }
+
+    //随机4位密码
+    public void RandomPassword(int length = 4)
+    {
+        const string digits = "0123456789";
+        var sb = new System.Text.StringBuilder();
+
+        for (int i = 0; i < length; i++)
+        {
+            int index = UnityEngine.Random.Range(0, digits.Length);
+            sb.Append(digits[index]);
+        }
+
+        password = sb.ToString();
+    }
 }

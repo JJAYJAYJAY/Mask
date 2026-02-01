@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     // 不同的谜题不同的密码用map存
     public Dictionary<puzzleList, string> puzzlePasswords = new Dictionary<puzzleList, string>();
+    public DetailPanelController buffInit;
     // 全局buff规则
     public GlobalRuleData globalRuleData = new();
     // 随机选择器
@@ -58,6 +59,7 @@ public class GameManager : MonoBehaviour
         rewardRandomPool = new RewardRandomPool(database.allItems,BuffManager.Instance.allBuffs);
         globalRuleData.OnBreakMaskLimitsChanged += rewardRandomPool.OnMakeLimitsChanged;
         rewardSelector = new RewardSelector(rewardRandomPool);
+        buffInit.OpenToDefault();
     }
 
     // 提供一个统一的接口来控制
@@ -65,7 +67,7 @@ public class GameManager : MonoBehaviour
     {
         if (globalBlocker == null) return;
         // alpha=1 显示，alpha=0 隐藏
-        globalBlocker.alpha = state ? 0.5f : 0f;
+        globalBlocker.alpha = state ? 0.6f : 0f;
         
         // blocksRaycasts 是核心：为 true 时拦截点击，为 false 时点击穿透
         globalBlocker.blocksRaycasts = state;
@@ -115,4 +117,20 @@ public class GameManager : MonoBehaviour
     {
         audioSource.PlayOneShot(buttonClick);
     }
+    
+    public void selectMask(RewardOption option){
+        StartCoroutine(SelectItemSequence(option.item));
+    }
+    private IEnumerator SelectItemSequence(ItemData item)
+    {
+        // 1️⃣ 渐黑（等待播放完）
+        yield return ScreenFader.Instance.FadeOut(0.5f);
+
+        // 2️⃣ 后续逻辑
+        Inventory.Instance.AddItem(item);
+        GlitchTextWriter.Instance.PlayMaskStory(item.MaskType);
+        rewardRandomPool.RebuildPools();
+        ScreenFader.Instance.FadeIn(0.1f);
+    }
+
 }

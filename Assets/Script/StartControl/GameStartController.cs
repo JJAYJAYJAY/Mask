@@ -22,7 +22,6 @@ public class GameStartController : MonoBehaviour
         Time.timeScale = 1f;
 
         // 1️⃣ 摄像机慢慢下移 + 同时开始变暗
-        // StartCoroutine(cameraMover.MoveDown(15,2f));
         yield return fader.FadeOut(1f);
         HideStartUI();
         cameraMover.TeleportToMainView();

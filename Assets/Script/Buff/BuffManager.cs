@@ -26,8 +26,6 @@ public class BuffManager : MonoBehaviour
         {
             buffDict[buff.buffName] = buff;
         }
-
-        SetupDebugPanel();
     }
 
     void SetupDebugPanel()

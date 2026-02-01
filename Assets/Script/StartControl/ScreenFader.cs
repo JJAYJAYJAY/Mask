@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
@@ -5,6 +6,17 @@ using System.Collections;
 public class ScreenFader : MonoBehaviour
 {
     public Image fadeImage;
+    public static ScreenFader Instance;
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
 
     public IEnumerator FadeOut(float duration)
     {

@@ -230,7 +230,7 @@ public class MainClockControl : MonoBehaviour
                 marker.GetComponent<RectTransform>().anchoredPosition = new Vector2(x, y);
                 marker.GetComponent<RectTransform>().localScale = new Vector3((4-i)*0.8f+1, (4-i)*0.8f+1, (4-i)*0.8f+1);
                 marker.GetComponent<UnityEngine.UI.Image>().sprite = GetUISprite(color);
-                if (type == puzzleList.PatternPuzzle2)
+                if (type == puzzleList.ClockPuzzle2)
                 {
                     // 50%概率变成灰色
                     if (Random.value < 0.5f)
