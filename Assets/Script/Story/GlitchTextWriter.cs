@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
 public class GlitchTextWriter : MonoBehaviour
@@ -16,9 +17,11 @@ public class GlitchTextWriter : MonoBehaviour
     public int charsPerFrame = 2;     // 每帧推进几个字符（调大=更快）
     public int glitchTailLength = 1;  // 尾巴乱码长度（1~2最舒服）
 
-    [Header("Data")]
-    public MskStoryData[] storyDatas;
-    public Dictionary<Mask,MskStoryData> storyDict=new();
+    [FormerlySerializedAs("storyDatas")] [Header("Data")]
+    public MaskStoryData[] MaskstoryDatas;
+
+    public StroyData[] StoryDatas;
+    public Dictionary<Mask,MaskStoryData> storyDict=new();
     private const string glitchChars = "@#$%&*+=-?/\\!";
     private Coroutine playCoroutine;
 
@@ -34,7 +37,7 @@ public class GlitchTextWriter : MonoBehaviour
 
     private void Start()
     {
-        foreach (var storyData in storyDatas)
+        foreach (var storyData in MaskstoryDatas)
         {
             Debug.Log(storyData.mask);
             storyDict.Add(storyData.mask, storyData);
@@ -51,6 +54,24 @@ public class GlitchTextWriter : MonoBehaviour
         playCoroutine = StartCoroutine(PlayCoroutine(fullText));
     }
 
+    public void PlayBeginStory()
+    {
+        gameObject.SetActive(true);
+        if (playCoroutine != null)
+            StopCoroutine(playCoroutine);
+        string fullText = StoryDatas[0].content;
+        playCoroutine = StartCoroutine(PlayCoroutine(fullText));
+    }
+
+    public void playEndStory(int storyIndex)
+    {
+        gameObject.SetActive(true);
+        if (playCoroutine != null)
+            StopCoroutine(playCoroutine);
+        string fullText = StoryDatas[storyIndex].content;
+        playCoroutine = StartCoroutine(PlayCoroutine(fullText));
+    }
+    
     public void StopMaskStory()
     {
         gameObject.SetActive(false);

@@ -27,16 +27,15 @@ public class GameStartController : MonoBehaviour
         cameraMover.TeleportToMainView();
         // 2️⃣ 黑屏中（闭眼）——这里可以切状态
         yield return new WaitForSeconds(0.2f);
-
+        
         // 3️⃣ 睁眼
         yield return fader.FadeIn(1.5f);
-
+        GlitchTextWriter.Instance.PlayBeginStory();
         // 4️⃣ 显示游戏 UI
         ShowGameUI();
         GameState.IsGameBegin = true;
         audioSource.PlayOneShot(bgmMusic);
         audioSource.loop = true;
-    
     }
 
     void ShowGameUI()

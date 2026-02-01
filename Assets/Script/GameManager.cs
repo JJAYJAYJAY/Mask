@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour
     [Header("Audio")]
     public AudioSource audioSource;
     public  AudioClip buttonClick;
+    public  AudioClip maskSelect;
     [Header("UI References")]
     [SerializeField] private CanvasGroup globalBlocker; // 拖入带 CanvasGroup 的全屏遮罩
     
@@ -119,6 +120,7 @@ public class GameManager : MonoBehaviour
     }
     
     public void selectMask(RewardOption option){
+        audioSource.PlayOneShot(maskSelect);
         StartCoroutine(SelectItemSequence(option.item));
     }
     private IEnumerator SelectItemSequence(ItemData item)
