@@ -22553,6 +22553,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: MakersMenu
       objectReference: {fileID: 0}
+    - target: {fileID: 1620658359287283505, guid: c93cfb260944fb044a4310262420f791,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8303934413296125910, guid: c93cfb260944fb044a4310262420f791,
         type: 3}
       propertyPath: m_Pivot.x

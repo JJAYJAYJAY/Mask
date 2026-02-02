@@ -1418,6 +1418,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: CloseButton (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 7122490559738144745, guid: a10f5bc766d0eff46a7e862026970d50,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 3702728210766676355}
+    - target: {fileID: 7122490559738144745, guid: a10f5bc766d0eff46a7e862026970d50,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: CloseToLast
+      objectReference: {fileID: 0}
+    - target: {fileID: 7122490559738144745, guid: a10f5bc766d0eff46a7e862026970d50,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: DetailPanelController, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
