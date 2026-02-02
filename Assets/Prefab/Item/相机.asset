@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: "\u76F8\u673A"
   icon: {fileID: -425089195, guid: a7bb1b2867125aa4ea037d2398470654, type: 3}
   type: 1
-  weight: 0
+  weight: 4
   note: 
   MaskType: 0
   width: 150
